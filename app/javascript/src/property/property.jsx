@@ -20,8 +20,6 @@ class Property extends React.Component {
           property: data.property,
           loading: false,
         });
-        console.log(process.env.STRIPE_PUBLISHABLE_KEY); //testing
-        console.log("hey");
       });
   }
 

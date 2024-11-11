@@ -29,5 +29,13 @@ module Api
     def booking_params
       params.require(:booking).permit(:property_id, :start_date, :end_date)
     end
+
+    # Todo not sure about code yet
+    def success
+      @booking = Booking.find_by(id: params[:id])
+      render 'api/bookings/success'
+    end
+
   end
 end
+
