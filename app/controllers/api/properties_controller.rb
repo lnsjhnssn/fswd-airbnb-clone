@@ -1,5 +1,21 @@
 module Api
   class PropertiesController < ApplicationController
+
+    def create
+      token = cookies.signed[:airbnb_session_token]
+      session = Session.find_by(token: token)
+      return render json: { error: 'user not logged in' }, status: :unauthorized if !session
+
+      @property = Property.new(property_params)
+      @property.user = session.user
+
+      if @property.save
+        render json: { property: @property }, status: :created
+      else
+        render json: { error: @property.errors.full_messages }, status: :bad_request
+      end
+    end       
+
     def index
       @properties = Property.order(created_at: :desc).page(params[:page]).per(6)
       return render json: { error: 'not_found' }, status: :not_found if !@properties
@@ -12,6 +28,24 @@ module Api
       return render json: { error: 'not_found' }, status: :not_found if !@property
 
       render 'api/properties/show', status: :ok
+    end
+
+    private
+
+    def property_params
+      params.require(:property).permit(
+        :title,
+        :description,
+        :city,
+        :country,
+        :property_type,
+        :price_per_night,
+        :max_guests,
+        :bedrooms,
+        :beds,
+        :baths,
+        :image_url
+      )
     end
   end
 end
