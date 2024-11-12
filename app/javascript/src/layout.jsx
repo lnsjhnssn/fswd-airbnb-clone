@@ -1,35 +1,27 @@
 import React from "react";
+import "./styles/main.scss";
 
 const Layout = (props) => {
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand navbar-light bg-light">
-        <div className="container-fluid">
-          <a className="navbar-brand text-danger" href="/">
-            Airbnb
+      <div className="app-layout">
+        <nav className="navbar">
+          <a className="navbar-brand" href="/">
+            BearnB
           </a>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item">
-                <a className="nav-link" href="/">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/add-property">
-                  Become a host
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      {props.children}
-      <footer className="p-3 bg-light">
-        <div>
-          <p className="me-3 mb-0 text-secondary">Airbnb Clone</p>
-        </div>
-      </footer>
+          <ul className="nav-links">
+            <li>
+              <a href="/add-property">
+                <button className="btn-host">Become a host</button>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        {props.children}
+        <footer className="footer">
+          <p>Airbnb Clone</p>
+        </footer>
+      </div>
     </React.Fragment>
   );
 };

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Layout from "@src/layout";
 import { handleErrors } from "../utils/fetchHelper.js";
 
-import "./home.scss";
+import "@src/styles/main.scss";
 
 class Home extends React.Component {
   state = {
@@ -11,9 +11,20 @@ class Home extends React.Component {
     total_pages: null,
     next_page: null,
     loading: true,
+    showOnlyMyProperties: false,
+    currentUser: null,
   };
 
   componentDidMount() {
+    fetch("/api/authenticated")
+      .then(handleErrors)
+      .then((data) => {
+        this.setState({
+          currentUserId: data.user_id,
+        });
+        console.log(data);
+      });
+
     fetch("/api/properties?page=1")
       .then(handleErrors)
       .then((data) => {
@@ -23,8 +34,15 @@ class Home extends React.Component {
           next_page: data.next_page,
           loading: false,
         });
+        console.log(data);
       });
   }
+
+  toggleMyProperties = () => {
+    this.setState((prevState) => ({
+      showOnlyMyProperties: !prevState.showOnlyMyProperties,
+    }));
+  };
 
   loadMore = () => {
     if (this.state.next_page === null) {
@@ -44,48 +62,73 @@ class Home extends React.Component {
   };
 
   render() {
-    const { properties, next_page, loading } = this.state;
+    const {
+      properties,
+      next_page,
+      loading,
+      currentUserId,
+      showOnlyMyProperties,
+    } = this.state;
+
+    const filteredProperties =
+      showOnlyMyProperties && currentUserId
+        ? properties.filter((property) => property.user_id === currentUserId)
+        : properties;
+
     return (
       <Layout>
-        <div className="container pt-4">
-          <h1 className="mb-1">Top-rated places to stay</h1>
-          <p className="text-secondary mb-3">
-            Explore some of the best-reviewed stays in the world
-          </p>
-          <div className="row">
-            {properties.map((property) => {
-              return (
-                <div key={property.id} className="col-6 col-lg-4 mb-4 property">
-                  <a
-                    href={`/property/${property.id}`}
-                    className="text-body text-decoration-none"
-                  >
-                    <div
-                      className="property-image mb-1 rounded"
-                      style={{ backgroundImage: `url(${property.image_url})` }}
-                    />
-                    <p className="text-uppercase mb-0 text-secondary">
-                      <small>
-                        <b>{property.city}</b>
-                      </small>
-                    </p>
-                    <h6 className="mb-0">{property.title}</h6>
-                    <p className="mb-0">
-                      <small>${property.price_per_night} USD/night</small>
-                    </p>
-                  </a>
-                </div>
-              );
-            })}
+        <div>
+          <div className="home-header">
+            <ul>
+              <li>
+                {currentUserId && (
+                  <button onClick={this.toggleMyProperties}>
+                    {showOnlyMyProperties
+                      ? "Show All Properties"
+                      : "Show My Properties"}
+                  </button>
+                )}
+              </li>
+              <li>
+                <button onClick={this.toggleMyBookings}>My Bookings</button>
+              </li>
+            </ul>
           </div>
-          {loading && <p>loading...</p>}
-          {loading || next_page === null || (
-            <div className="text-center">
-              <button className="btn btn-light mb-4" onClick={this.loadMore}>
-                load more
-              </button>
+          <div>
+            <div className="properties-container">
+              {filteredProperties.map((property) => {
+                return (
+                  <div key={property.id}>
+                    <a href={`/property/${property.id}`}>
+                      <div
+                        className="property-image"
+                        style={{
+                          backgroundImage: `url(${property.image_url})`,
+                        }}
+                        role="img"
+                        aria-label={property.title}
+                      />
+                      <p>
+                        <small>
+                          <b>{property.city}</b>
+                        </small>
+                      </p>
+                      <h6>{property.title}</h6>
+                      <p>
+                        <small>${property.price_per_night} USD/night</small>
+                      </p>
+                    </a>
+                  </div>
+                );
+              })}
             </div>
-          )}
+            {loading && <p>loading...</p>}
+            {loading || next_page === null || (
+              <div>
+                <button onClick={this.loadMore}>See more</button>
+              </div>
+            )}
+          </div>
         </div>
       </Layout>
     );

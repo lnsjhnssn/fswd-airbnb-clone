@@ -22,6 +22,12 @@ class Property extends React.Component {
         });
       });
 
+    fetch(`/api/properties/`)
+      .then(handleErrors)
+      .then((data) => {
+        console.log(data);
+      });
+
     fetch("/api/authenticated")
       .then(handleErrors)
       .then((data) => {
@@ -59,53 +65,59 @@ class Property extends React.Component {
 
     return (
       <Layout>
-        <div
-          className="property-image mb-3"
-          style={{ backgroundImage: `url(${image_url})` }}
-        />
-        <div className="container">
-          <div className="row">
-            <div className="info col-12 col-lg-7">
-              <div className="mb-3 d-flex justify-content-between align-items-start">
-                <div>
-                  <h3 className="mb-0">{title}</h3>
-                  <p className="text-uppercase mb-0 text-secondary">
-                    <small>{city}</small>
-                  </p>
-                  <p className="mb-0">
-                    <small>
-                      Hosted by <b>{user.username}</b>
-                    </small>
+        <div className="property-container">
+          <div className="property-hero">
+            <img src={image_url} alt={title} />
+          </div>
+
+          <div className="property-content">
+            <div className="property-header">
+              <div>
+                <h3>{title}</h3>
+                <p>
+                  <b>
+                    {property_type} in {city}, {country}
+                  </b>
+                </p>
+                <div className="property-specs">
+                  <ul>
+                    <li>{max_guests} guests</li>
+                    <li>{bedrooms} bedroom</li>
+                    <li>{beds} bed</li>
+                    <li>{baths} bath</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid-container">
+              <div className="grid-1">
+                <div className="property-host">
+                  <p>
+                    Hosted by <b>{user.username}</b>
                   </p>
                 </div>
+
+                <div className="property-description">
+                  <p>{description}</p>
+                </div>
                 {isHost && (
-                  <a
-                    href={`/edit-property/${id}`}
-                    className="btn btn-outline-primary"
+                  <button
+                    onClick={() =>
+                      (window.location.href = `/edit-property/${id}`)
+                    }
+                    className="btn-edit-property"
                   >
                     Edit Property
-                  </a>
+                  </button>
                 )}
               </div>
-              <div>
-                <p className="mb-0 text-capitalize">
-                  <b>{property_type}</b>
-                </p>
-                <p>
-                  <span className="me-3">{max_guests} guests</span>
-                  <span className="me-3">{bedrooms} bedroom</span>
-                  <span className="me-3">{beds} bed</span>
-                  <span className="me-3">{baths} bath</span>
-                </p>
+              <div className="grid-2">
+                <BookingWidget
+                  property_id={id}
+                  price_per_night={price_per_night}
+                />
               </div>
-              <hr />
-              <p>{description}</p>
-            </div>
-            <div className="col-12 col-lg-5">
-              <BookingWidget
-                property_id={id}
-                price_per_night={price_per_night}
-              />
             </div>
           </div>
         </div>

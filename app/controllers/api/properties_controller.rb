@@ -34,7 +34,7 @@ module Api
     end
 
     def index
-      @properties = Property.order(created_at: :desc).page(params[:page]).per(6)
+      @properties = Property.order(created_at: :desc).page(params[:page]).per(12)
       return render json: { error: 'not_found' }, status: :not_found if !@properties
 
       render 'api/properties/index', status: :ok
@@ -61,7 +61,8 @@ module Api
         :bedrooms,
         :beds,
         :baths,
-        :image_url
+        :image_url,
+        :user_id
       )
     end
   end
