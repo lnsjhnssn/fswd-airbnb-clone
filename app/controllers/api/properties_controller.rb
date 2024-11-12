@@ -16,6 +16,23 @@ module Api
       end
     end       
 
+    def update
+      token = cookies.signed[:airbnb_session_token]
+      session = Session.find_by(token: token)
+      return render json: { error: 'user not logged in' }, status: :unauthorized if !session
+
+      @property = Property.find_by(id: params[:id])
+      return render json: { error: 'property not found' }, status: :not_found if !@property
+      
+      return render json: { error: 'unauthorized' }, status: :unauthorized if @property.user != session.user
+
+      if @property.update(property_params)
+        render json: { property: @property }, status: :ok
+      else
+        render json: { error: @property.errors.full_messages }, status: :bad_request
+      end
+    end
+
     def index
       @properties = Property.order(created_at: :desc).page(params[:page]).per(6)
       return render json: { error: 'not_found' }, status: :not_found if !@properties
@@ -29,7 +46,7 @@ module Api
 
       render 'api/properties/show', status: :ok
     end
-
+ 
     private
 
     def property_params

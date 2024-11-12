@@ -5,12 +5,13 @@ Rails.application.routes.draw do
   get '/login' => 'static_pages#login'
   get 'booking/:id/success' => 'static_pages#success'
   get '/add-property' => 'static_pages#addProperty'
+  get '/edit-property/:id' => 'static_pages#editProperty'
  
   namespace :api do
     # Add routes below this line
     resources :users, only: [:create]
     resources :sessions, only: [:create, :destroy]
-    resources :properties, only: [:index, :show, :create]
+    resources :properties, only: [:index, :show, :create, :update]
     resources :bookings, only: [:create]
     resources :charges, only: [:create]
 

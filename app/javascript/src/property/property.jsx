@@ -1,4 +1,3 @@
-// property.jsx
 import React from "react";
 import Layout from "@src/layout";
 import BookingWidget from "./bookingWidget";
@@ -81,7 +80,7 @@ class Property extends React.Component {
                 </div>
                 {isHost && (
                   <a
-                    href={`/properties/${id}/edit`}
+                    href={`/edit-property/${id}`}
                     className="btn btn-outline-primary"
                   >
                     Edit Property
