@@ -5,6 +5,8 @@ import { DateRangePicker } from "react-dates";
 import { safeCredentials, handleErrors } from "../../utils/fetchHelper";
 import "react-dates/lib/css/_datepicker.css";
 
+import "../styles/main.scss";
+
 class BookingWidget extends React.Component {
   state = {
     authenticated: false,
@@ -126,13 +128,13 @@ class BookingWidget extends React.Component {
     }
 
     return (
-      <div className="border p-4 mb-4">
+      <div>
         <form onSubmit={this.submitBooking}>
-          <h5>
-            ${price_per_night} <small>per night</small>
-          </h5>
+          <h4>
+            ${price_per_night} <small>night</small>
+          </h4>
           <hr />
-          <div style={{ marginBottom: focusedInput ? "400px" : "2rem" }}>
+          <div style={{ marginBottom: focusedInput ? "330px" : "1.5rem" }}>
             <DateRangePicker
               startDate={startDate} // momentPropTypes.momentObj or null,
               startDateId="start_date" // PropTypes.string.isRequired,
@@ -146,13 +148,13 @@ class BookingWidget extends React.Component {
             />
           </div>
           {days && (
-            <div className="d-flex justify-content-between">
+            <div>
               <p>Total</p>
               <p>${(price_per_night * days).toLocaleString()}</p>
             </div>
           )}
-          <button type="submit" className="btn btn-large btn-danger btn-block">
-            Book
+          <button type="submit" className="btn-booking">
+            Reserve
           </button>
         </form>
       </div>

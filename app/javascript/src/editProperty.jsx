@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 import Layout from "@src/layout";
 import { safeCredentials, handleErrors } from "../utils/fetchHelper";
 
-const AddProperty = () => {
+const EditProperty = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
     fetch(
-      "/api/properties",
+      "/api/properties/",
       safeCredentials({
         method: "POST",
         body: JSON.stringify({
@@ -167,6 +167,6 @@ const AddProperty = () => {
 };
 
 ReactDOM.render(
-  <AddProperty />,
+  <EditProperty />,
   document.body.appendChild(document.createElement("div"))
 );

@@ -1,4 +1,3 @@
-// property.jsx
 import React from "react";
 import Layout from "@src/layout";
 import BookingWidget from "./bookingWidget";
@@ -10,6 +9,7 @@ class Property extends React.Component {
   state = {
     property: {},
     loading: true,
+    currentUser: null,
   };
 
   componentDidMount() {
@@ -21,10 +21,26 @@ class Property extends React.Component {
           loading: false,
         });
       });
+
+    fetch(`/api/properties/`)
+      .then(handleErrors)
+      .then((data) => {
+        console.log(data);
+      });
+
+    fetch("/api/authenticated")
+      .then(handleErrors)
+      .then((data) => {
+        if (data.authenticated) {
+          this.setState({
+            currentUser: data.username,
+          });
+        }
+      });
   }
 
   render() {
-    const { property, loading } = this.state;
+    const { property, loading, currentUser } = this.state;
     if (loading) {
       return <p>loading...</p>;
     }
@@ -45,45 +61,63 @@ class Property extends React.Component {
       user,
     } = property;
 
+    const isHost = currentUser && user && currentUser === user.username;
+
     return (
       <Layout>
-        <div
-          className="property-image mb-3"
-          style={{ backgroundImage: `url(${image_url})` }}
-        />
-        <div className="container">
-          <div className="row">
-            <div className="info col-12 col-lg-7">
-              <div className="mb-3">
-                <h3 className="mb-0">{title}</h3>
-                <p className="text-uppercase mb-0 text-secondary">
-                  <small>{city}</small>
-                </p>
-                <p className="mb-0">
-                  <small>
-                    Hosted by <b>{user.username}</b>
-                  </small>
-                </p>
-              </div>
+        <div className="property-container">
+          <div className="property-hero">
+            <img src={image_url} alt={title} />
+          </div>
+
+          <div className="property-content">
+            <div className="property-header">
               <div>
-                <p className="mb-0 text-capitalize">
-                  <b>{property_type}</b>
-                </p>
+                <h3>{title}</h3>
                 <p>
-                  <span className="me-3">{max_guests} guests</span>
-                  <span className="me-3">{bedrooms} bedroom</span>
-                  <span className="me-3">{beds} bed</span>
-                  <span className="me-3">{baths} bath</span>
+                  <b>
+                    {property_type} in {city}, {country}
+                  </b>
                 </p>
+                <div className="property-specs">
+                  <ul>
+                    <li>{max_guests} guests</li>
+                    <li>{bedrooms} bedroom</li>
+                    <li>{beds} bed</li>
+                    <li>{baths} bath</li>
+                  </ul>
+                </div>
               </div>
-              <hr />
-              <p>{description}</p>
             </div>
-            <div className="col-12 col-lg-5">
-              <BookingWidget
-                property_id={id}
-                price_per_night={price_per_night}
-              />
+
+            <div className="grid-container">
+              <div className="grid-1">
+                <div className="property-host">
+                  <p>
+                    Hosted by <b>{user.username}</b>
+                  </p>
+                </div>
+
+                <div className="property-description">
+                  <p>{description}</p>
+                </div>
+                {isHost && (
+                  <button
+                    onClick={() =>
+                      (window.location.href = `/edit-property/${id}`)
+                    }
+                    className="btn-edit-property"
+                  >
+                    Edit Property
+                  </button>
+                )}
+              </div>
+              <div className="grid-2">
+                <BookingWidget
+                  property_id={id}
+                  price_per_night={price_per_night}
+                />
+              </div>
             </div>
           </div>
         </div>
