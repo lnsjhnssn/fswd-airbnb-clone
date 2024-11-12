@@ -31,7 +31,6 @@ const AddProperty = () => {
       .then(handleErrors)
       .then((response) => {
         window.location = `/property/${response.property.id}`;
-        console.log("response", response);
       })
       .catch((error) => {
         console.log(error);

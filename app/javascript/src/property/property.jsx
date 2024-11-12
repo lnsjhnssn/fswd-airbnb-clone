@@ -10,6 +10,7 @@ class Property extends React.Component {
   state = {
     property: {},
     loading: true,
+    currentUser: null,
   };
 
   componentDidMount() {
@@ -21,10 +22,20 @@ class Property extends React.Component {
           loading: false,
         });
       });
+
+    fetch("/api/authenticated")
+      .then(handleErrors)
+      .then((data) => {
+        if (data.authenticated) {
+          this.setState({
+            currentUser: data.username,
+          });
+        }
+      });
   }
 
   render() {
-    const { property, loading } = this.state;
+    const { property, loading, currentUser } = this.state;
     if (loading) {
       return <p>loading...</p>;
     }
@@ -45,6 +56,8 @@ class Property extends React.Component {
       user,
     } = property;
 
+    const isHost = currentUser && user && currentUser === user.username;
+
     return (
       <Layout>
         <div
@@ -54,16 +67,26 @@ class Property extends React.Component {
         <div className="container">
           <div className="row">
             <div className="info col-12 col-lg-7">
-              <div className="mb-3">
-                <h3 className="mb-0">{title}</h3>
-                <p className="text-uppercase mb-0 text-secondary">
-                  <small>{city}</small>
-                </p>
-                <p className="mb-0">
-                  <small>
-                    Hosted by <b>{user.username}</b>
-                  </small>
-                </p>
+              <div className="mb-3 d-flex justify-content-between align-items-start">
+                <div>
+                  <h3 className="mb-0">{title}</h3>
+                  <p className="text-uppercase mb-0 text-secondary">
+                    <small>{city}</small>
+                  </p>
+                  <p className="mb-0">
+                    <small>
+                      Hosted by <b>{user.username}</b>
+                    </small>
+                  </p>
+                </div>
+                {isHost && (
+                  <a
+                    href={`/properties/${id}/edit`}
+                    className="btn btn-outline-primary"
+                  >
+                    Edit Property
+                  </a>
+                )}
               </div>
               <div>
                 <p className="mb-0 text-capitalize">
