@@ -8,6 +8,10 @@ class Booking < ApplicationRecord
   validates :user, presence: true
   validates :property, presence: true
 
+  def is_paid?
+    self.charges.pluck(:complete).include?(true)
+  end
+
   before_validation :check_start_date_smaller_than_end_date
   before_validation :check_availability
 

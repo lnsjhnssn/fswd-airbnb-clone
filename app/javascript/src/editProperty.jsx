@@ -1,16 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Layout from "@src/layout";
 import { safeCredentials, handleErrors } from "../utils/fetchHelper";
 
 const EditProperty = () => {
+  const [property, setProperty] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Get property ID from URL (assuming URL pattern: /property/:id/edit)
+  const propertyId = window.location.pathname.split("/")[2];
+
+  useEffect(() => {
+    // Fetch property data when component mounts
+    fetch(
+      `/api/properties/${propertyId}`,
+      safeCredentials({
+        method: "GET",
+      })
+    )
+      .then(handleErrors)
+      .then((response) => {
+        setProperty(response.property);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, [propertyId]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     fetch(
-      "/api/properties/",
+      `/api/properties/${propertyId}`, // Update endpoint to include property ID
       safeCredentials({
-        method: "POST",
+        method: "PUT", // Changed from POST to PUT
         body: JSON.stringify({
           property: {
             title: e.target.title.value,
@@ -37,10 +62,18 @@ const EditProperty = () => {
       });
   };
 
+  if (loading) {
+    return (
+      <Layout>
+        <div>Loading...</div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="container">
-        <h1 className="text-center mb-4">Become a host</h1>
+        <h1 className="text-center mb-4">Edit Property</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title:</label>
@@ -50,6 +83,7 @@ const EditProperty = () => {
               name="title"
               className="form-control"
               required
+              defaultValue={property?.title}
             />
           </div>
           <div className="form-group">
@@ -59,6 +93,7 @@ const EditProperty = () => {
               name="description"
               className="form-control"
               required
+              defaultValue={property?.description}
             ></textarea>
           </div>
           <div className="form-group">
@@ -69,6 +104,7 @@ const EditProperty = () => {
               name="city"
               className="form-control"
               required
+              defaultValue={property?.city}
             />
           </div>
           <div className="form-group">
@@ -79,6 +115,7 @@ const EditProperty = () => {
               name="country"
               className="form-control"
               required
+              defaultValue={property?.country}
             />
           </div>
           <div className="form-group">
@@ -88,6 +125,7 @@ const EditProperty = () => {
               name="property_type"
               className="form-control"
               required
+              defaultValue={property?.property_type}
             >
               <option value="">Select</option>
               <option value="apartment">Apartment</option>
@@ -105,6 +143,7 @@ const EditProperty = () => {
               name="price_per_night"
               className="form-control"
               required
+              defaultValue={property?.price_per_night}
             />
           </div>
           <div className="form-group">
@@ -115,6 +154,7 @@ const EditProperty = () => {
               name="max_guests"
               className="form-control"
               required
+              defaultValue={property?.max_guests}
             />
           </div>
           <div className="form-group">
@@ -125,6 +165,7 @@ const EditProperty = () => {
               name="bedrooms"
               className="form-control"
               required
+              defaultValue={property?.bedrooms}
             />
           </div>
           <div className="form-group">
@@ -135,6 +176,7 @@ const EditProperty = () => {
               name="beds"
               className="form-control"
               required
+              defaultValue={property?.beds}
             />
           </div>
           <div className="form-group">
@@ -145,6 +187,7 @@ const EditProperty = () => {
               name="baths"
               className="form-control"
               required
+              defaultValue={property?.baths}
             />
           </div>
           <div className="form-group">
@@ -155,10 +198,11 @@ const EditProperty = () => {
               name="image_url"
               className="form-control"
               required
+              defaultValue={property?.image_url}
             />
           </div>
           <button type="submit" className="btn btn-primary">
-            List your home
+            Update Property
           </button>
         </form>
       </div>

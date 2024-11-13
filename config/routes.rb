@@ -16,11 +16,16 @@ Rails.application.routes.draw do
     post '/charges/mark_complete' => 'charges#mark_complete'
   end
 
-  get '/property/:id' => 'static_pages#property'
+  # login sign up
   get '/login' => 'static_pages#login'
+  
+  # hosting, properties, bookings
+  get '/property/:id' => 'static_pages#property'
+  get '/property/:id/edit' => 'static_pages#editProperty'
   get 'booking/:id/success' => 'static_pages#success'
   get '/add-property' => 'static_pages#addProperty'
-  get '/edit-property/:id' => 'static_pages#editProperty'
+ 
+  get '/hosting' => 'static_pages#hosting'
 
   root to: 'static_pages#home'
 

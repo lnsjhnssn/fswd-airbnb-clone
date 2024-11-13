@@ -5,11 +5,12 @@ import LoginWidget from "./loginWidget";
 import SignupWidget from "./signupWidget";
 import { safeCredentials, handleErrors } from "../../utils/fetchHelper";
 
-import "./login.scss";
+import "../styles/main.scss";
 
 class Login extends React.Component {
   state = {
     authenticated: false,
+    username: "",
     show_login: true,
   };
 
@@ -19,6 +20,7 @@ class Login extends React.Component {
       .then((data) => {
         this.setState({
           authenticated: data.authenticated,
+          username: data.username,
         });
       });
   }
@@ -30,18 +32,14 @@ class Login extends React.Component {
   };
 
   render() {
-    const { authenticated, show_login } = this.state;
+    const { authenticated, show_login, username } = this.state;
     if (authenticated) {
       return (
         <Layout>
-          <div className="container">
-            <div className="row">
-              <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
-                <div className="border p-4">
-                  <p className="mb-0">You are already logged in 🙂</p>
-                </div>
-              </div>
-            </div>
+          <div>
+            <p>
+              You are already logged in as <b>{username}</b> 🙂
+            </p>
           </div>
         </Layout>
       );
@@ -49,18 +47,12 @@ class Login extends React.Component {
 
     return (
       <Layout>
-        <div className="container">
-          <div className="row">
-            <div className="col-12 col-md-9 col-lg-6 mx-auto my-4">
-              <div className="border p-4">
-                {show_login ? (
-                  <LoginWidget toggle={this.toggle} />
-                ) : (
-                  <SignupWidget toggle={this.toggle} />
-                )}
-              </div>
-            </div>
-          </div>
+        <div>
+          {show_login ? (
+            <LoginWidget toggle={this.toggle} />
+          ) : (
+            <SignupWidget toggle={this.toggle} />
+          )}
         </div>
       </Layout>
     );
