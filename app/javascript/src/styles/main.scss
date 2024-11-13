@@ -48,11 +48,7 @@ html {
   width: 100vw;
 
   @media screen and (min-width: 768px) {
-    font-size: 18px;
-  }
-
-  @media screen and (min-width: 1024px) {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
@@ -98,6 +94,99 @@ button {
   // }
 }
 
+// LoginWidget
+.login-container,
+.signup-container {
+  text-align: center;
+  padding-top: 3rem;
+  max-width: 22rem;
+  margin: 0 auto;
+}
+
+.login-widget,
+.signup-widget {
+  margin: 2rem auto 1rem;
+  padding: 0.6rem 2rem 2rem;
+  border-radius: 4px;
+  border: 3px dotted var(--grey);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-widget h2,
+.signup-widget h2 {
+  font-size: 1rem;
+  margin: 0.8rem 0 1rem;
+}
+
+.login-widget form,
+.signup-widget form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-widget input,
+.signup-widget input {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.login-widget button[type="submit"],
+.signup-widget button[type="submit"] {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--blue-light);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-widget button[type="submit"]:hover {
+  background-color: var(--blue-light-hover);
+}
+
+.login-widget button[type="submit"]:hover {
+  background-color: var(--blue-light-hover);
+}
+
+.error {
+  color: #dc3545;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.signup-prompt {
+  margin-top: 1rem;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--blue);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-decoration: underline;
+  padding: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .login-widget {
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+}
+
 /* Home.jsx */
 
 .properties-container {
@@ -137,7 +226,7 @@ button {
   ul {
     list-style: none;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
@@ -295,5 +384,134 @@ button {
   p {
     color: #717171;
     margin: 0;
+  }
+}
+
+/* Hosting */
+
+.container-hosting {
+  max-width: 900px;
+}
+
+.container-my-properties {
+  margin: 2rem auto 0;
+  max-width: 900px;
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  .properties-list {
+  }
+
+  .property-card {
+    border-bottom: 1px solid var(--grey);
+    padding: 2rem 0;
+
+    .property-details {
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .property-links {
+      a {
+        text-decoration: underline;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  .btn-add-property {
+    background-color: var(--airbnb-brand-color);
+    color: var(--white);
+  }
+}
+
+.bookings-section {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+}
+
+.bookings-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.booking-item {
+  padding: 0.25rem 0;
+  color: #666;
+}
+
+.loading-text,
+.no-bookings {
+  color: #666;
+  font-style: italic;
+  margin: 0;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+
+  th,
+  td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+  }
+
+  .status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+
+    &.upcoming {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+
+    &.active {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    &.completed {
+      background-color: #f5f5f5;
+      color: #616161;
+    }
+  }
+
+  .payment-status {
+    font-weight: 500;
+
+    &.paid {
+      color: #2ecc71;
+    }
+
+    &.pending {
+      color: #f39c12;
+    }
+  }
+
+  tr.paid-booking {
+    background-color: #f8fff8;
+  }
+
+  tr.unpaid-booking {
+    background-color: #fff8f8;
   }
 }

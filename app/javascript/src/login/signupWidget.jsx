@@ -1,7 +1,7 @@
 // signupWidget.jsx
 import React from "react";
-import ReactDOM from "react-dom";
 import { safeCredentials, handleErrors } from "../../utils/fetchHelper";
+import "../styles/main.scss";
 
 class SignupWidget extends React.Component {
   state = {
@@ -21,9 +21,7 @@ class SignupWidget extends React.Component {
     if (e) {
       e.preventDefault();
     }
-    this.setState({
-      error: "",
-    });
+    this.setState({ error: "" });
 
     fetch(
       "/api/users",
@@ -55,9 +53,7 @@ class SignupWidget extends React.Component {
     if (e) {
       e.preventDefault();
     }
-    this.setState({
-      error: "",
-    });
+    this.setState({ error: "" });
 
     fetch(
       "/api/sessions",
@@ -88,48 +84,51 @@ class SignupWidget extends React.Component {
 
   render() {
     const { email, password, username, error } = this.state;
+
     return (
-      <React.Fragment>
-        <form onSubmit={this.signup}>
-          <input
-            name="username"
-            type="text"
-            className="form-control form-control-lg mb-3"
-            placeholder="Username"
-            value={username}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            name="email"
-            type="text"
-            className="form-control form-control-lg mb-3"
-            placeholder="Email"
-            value={email}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            name="password"
-            type="password"
-            className="form-control form-control-lg mb-3"
-            placeholder="Password"
-            value={password}
-            onChange={this.handleChange}
-            required
-          />
-          <button type="submit" className="btn btn-danger btn-block btn-lg">
-            Sign up
-          </button>
-        </form>
-        <hr />
-        <p className="mb-0">
-          Already have an account?{" "}
-          <a className="text-primary" onClick={this.props.toggle}>
-            Log in
-          </a>
-        </p>
-      </React.Fragment>
+      <div className="signup-container">
+        <div className="signup-widget">
+          <h2>Sign Up</h2>
+
+          <form onSubmit={this.signup}>
+            <input
+              name="username"
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={this.handleChange}
+              required
+            />
+            {error && <p className="error">{error}</p>}
+            <button type="submit">Sign up</button>
+          </form>
+
+          <div className="login-prompt">
+            <p>
+              Already have an account?{" "}
+              <button className="link-button" onClick={this.props.toggle}>
+                Log in
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
     );
   }
 }

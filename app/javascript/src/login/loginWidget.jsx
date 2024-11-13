@@ -1,7 +1,7 @@
 // loginWidget.jsx
 import React from "react";
-import ReactDOM from "react-dom";
 import { safeCredentials, handleErrors } from "../../utils/fetchHelper";
+import "../styles/main.scss";
 
 class LoginWidget extends React.Component {
   state = {
@@ -20,9 +20,7 @@ class LoginWidget extends React.Component {
     if (e) {
       e.preventDefault();
     }
-    this.setState({
-      error: "",
-    });
+    this.setState({ error: "" });
 
     fetch(
       "/api/sessions",
@@ -53,40 +51,43 @@ class LoginWidget extends React.Component {
 
   render() {
     const { email, password, error } = this.state;
+
     return (
-      <React.Fragment>
-        <form onSubmit={this.login}>
-          <input
-            name="email"
-            type="text"
-            className="form-control form-control-lg mb-3"
-            placeholder="Email"
-            value={email}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            name="password"
-            type="password"
-            className="form-control form-control-lg mb-3"
-            placeholder="Password"
-            value={password}
-            onChange={this.handleChange}
-            required
-          />
-          <button type="submit" className="btn btn-danger btn-block btn-lg">
-            Log in
-          </button>
-          {error && <p className="text-danger mt-2">{error}</p>}
-        </form>
-        <hr />
-        <p className="mb-0">
-          Don't have an account?{" "}
-          <a className="text-primary" onClick={this.props.toggle}>
-            Sign up
-          </a>
-        </p>
-      </React.Fragment>
+      <div className="login-container">
+        <div className="login-widget">
+          <h2>Log In</h2>
+
+          <form onSubmit={this.login}>
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={this.handleChange}
+              required
+            />
+            {error && <p className="error">{error}</p>}
+            <button type="submit">Log in</button>
+          </form>
+
+          <div className="signup-prompt">
+            <p>
+              Don't have an account?{" "}
+              <button className="link-button" onClick={this.props.toggle}>
+                Sign up
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
     );
   }
 }

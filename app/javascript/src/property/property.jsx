@@ -104,7 +104,7 @@ class Property extends React.Component {
                 {isHost && (
                   <button
                     onClick={() =>
-                      (window.location.href = `/edit-property/${id}`)
+                      (window.location.href = `/property/${id}/edit`)
                     }
                     className="btn-edit-property"
                   >
