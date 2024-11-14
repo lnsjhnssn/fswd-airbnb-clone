@@ -10,9 +10,9 @@ module Api
       @property.user = session.user
 
       if @property.save
-        render json: { property: @property }, status: :created
+        render 'api/properties/create', status: :created
       else
-        render json: { error: @property.errors.full_messages }, status: :bad_request
+        render json: { success: false }, status: :bad_request
       end
     end       
 
