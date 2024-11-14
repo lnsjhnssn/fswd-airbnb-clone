@@ -42,7 +42,7 @@ const MyTrips = () => {
                 Dates: {new Date(booking.start_date).toLocaleDateString()} -{" "}
                 {new Date(booking.end_date).toLocaleDateString()}
               </p>
-              <p>Payment: {booking.paid ? "Paid" : "Pay now"}</p>
+              <p>Payment: {booking.is_paid ? "Paid" : "Pay now"}</p>
             </div>
           </div>
         </a>
