@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resources :sessions, only: [:create, :destroy]
     resources :properties, only: [:index, :show, :create, :update]
-    resources :bookings, only: [:create] do
+    resources :bookings, only: [:create, :show] do
       collection do
         get 'my_bookings' => 'bookings#get_user_bookings'
       end
@@ -33,6 +33,9 @@ Rails.application.routes.draw do
  
   # my pages
   get '/hosting' => 'static_pages#hosting'
+
+  # webhooks
+  resources :webhooks, only: [:create];
 
   # home
   root to: 'static_pages#home'

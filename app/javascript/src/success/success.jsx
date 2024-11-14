@@ -1,29 +1,24 @@
-import React, { useState, useEffect } from "react";
-import Layout from "@src/layout";
-import { handleErrors } from "../../utils/fetchHelper";
-
-import "./success.scss";
+import React, { useEffect } from "react";
+import { safeCredentials, handleErrors } from "../../utils/fetchHelper";
 
 const Success = () => {
-  const [property, setProperty] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`/api/properties/14`)
-      .then(handleErrors)
-      .then((data) => {
-        setProperty(data.property);
-        setLoading(false);
-      });
-  }, []);
+  console.log("Success");
 
   return (
-    <Layout>
-      <div>
-        <h1>Booking Successful!</h1>
-        <p>Your booking ID is</p>
+    <div className="container mt-5">
+      <div className="card">
+        <div className="card-header bg-success text-white">
+          <h3 className="mb-0">Payment Successful!</h3>
+        </div>
+        <div className="card-body">
+          <div className="alert alert-success">
+            <h4>Thank you for your booking!</h4>
+            <p>We have received your payment and your booking is confirmed.</p>
+            <p>Check your console to see all booking details.</p>
+          </div>
+        </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 
