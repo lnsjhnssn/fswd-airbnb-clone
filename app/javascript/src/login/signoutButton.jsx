@@ -1,5 +1,5 @@
 import React from "react";
-import { safeCredentials, handleErrors } from "../../utils/fetchHelper";
+import { logoutUser } from "../../utils/api";
 
 class SignoutButton extends React.Component {
   logout = (e) => {
@@ -7,13 +7,7 @@ class SignoutButton extends React.Component {
       e.preventDefault();
     }
 
-    fetch(
-      "/api/sessions/destroy",
-      safeCredentials({
-        method: "DELETE",
-      })
-    )
-      .then(handleErrors)
+    logoutUser()
       .then((data) => {
         if (data.success) {
           window.location = "/";

@@ -417,7 +417,9 @@ button {
       margin-bottom: 0.5rem;
     }
 
-    .property-links {
+    .property-actions {
+      list-style: none;
+
       a {
         text-decoration: underline;
 

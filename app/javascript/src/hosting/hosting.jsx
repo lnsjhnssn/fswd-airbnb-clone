@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { handleErrors } from "../../utils/fetchHelper";
 import Layout from "@src/layout";
 import MyProperties from "./myProperties";
 import MyBookings from "./myBookings";
+import { checkAuth } from "../../utils/api";
 
 import "./hosting.scss";
 
@@ -12,8 +12,7 @@ const Hosting = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/authenticated")
-      .then(handleErrors)
+    checkAuth()
       .then((data) => {
         setUsername(data.username);
         setUserId(data.user_id);

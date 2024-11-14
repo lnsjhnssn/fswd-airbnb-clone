@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { handleErrors } from "../../utils/fetchHelper";
+import { checkAuth } from "../../utils/api";
 import SignoutButton from "../login/signoutButton";
 
 const Navbar = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    fetch("/api/authenticated")
-      .then(handleErrors)
-      .then((data) => {
+    const fetchAuthStatus = async () => {
+      try {
+        const data = await checkAuth();
         setAuthenticated(data.authenticated);
-      });
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        setAuthenticated(false);
+      }
+    };
+
+    fetchAuthStatus();
   }, []);
 
   return (
@@ -23,7 +29,6 @@ const Navbar = () => {
       </button>
       <ul className="nav-links">
         {authenticated ? (
-          // Buttons for authenticated users
           <>
             <li>
               <button

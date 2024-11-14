@@ -1,65 +1,52 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Layout from "@src/layout";
-import { safeCredentials, handleErrors } from "../utils/fetchHelper";
+import { fetchProperty, updateProperty } from "../utils/api";
 
 const EditProperty = () => {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Get property ID from URL (assuming URL pattern: /property/:id/edit)
   const propertyId = window.location.pathname.split("/")[2];
 
   useEffect(() => {
-    // Fetch property data when component mounts
-    fetch(
-      `/api/properties/${propertyId}`,
-      safeCredentials({
-        method: "GET",
-      })
-    )
-      .then(handleErrors)
-      .then((response) => {
-        setProperty(response.property);
-        setLoading(false);
-      })
-      .catch((error) => {
+    const loadProperty = async () => {
+      try {
+        const data = await fetchProperty(propertyId);
+        setProperty(data);
+      } catch (error) {
         console.log(error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    loadProperty();
   }, [propertyId]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    fetch(
-      `/api/properties/${propertyId}`, // Update endpoint to include property ID
-      safeCredentials({
-        method: "PUT", // Changed from POST to PUT
-        body: JSON.stringify({
-          property: {
-            title: e.target.title.value,
-            description: e.target.description.value,
-            city: e.target.city.value,
-            country: e.target.country.value,
-            property_type: e.target.property_type.value,
-            price_per_night: parseFloat(e.target.price_per_night.value),
-            max_guests: parseInt(e.target.max_guests.value),
-            bedrooms: parseInt(e.target.bedrooms.value),
-            beds: parseInt(e.target.beds.value),
-            baths: parseFloat(e.target.baths.value),
-            image_url: e.target.image_url.value,
-          },
-        }),
-      })
-    )
-      .then(handleErrors)
-      .then((response) => {
-        window.location = `/property/${response.property.id}`;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const formData = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      city: e.target.city.value,
+      country: e.target.country.value,
+      property_type: e.target.property_type.value,
+      price_per_night: parseFloat(e.target.price_per_night.value),
+      max_guests: parseInt(e.target.max_guests.value),
+      bedrooms: parseInt(e.target.bedrooms.value),
+      beds: parseInt(e.target.beds.value),
+      baths: parseFloat(e.target.baths.value),
+      image_url: e.target.image_url.value,
+    };
+
+    try {
+      const response = await updateProperty(propertyId, formData);
+      window.location = `/property/${response.property.id}`;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (loading) {

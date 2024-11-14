@@ -1,139 +1,129 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Layout from "@src/layout";
-import { handleErrors } from "../utils/fetchHelper.js";
+import {
+  fetchAuthenticatedUser,
+  fetchPropertiesWithPagination,
+} from "../utils/api";
 
 import "@src/styles/main.scss";
 
-class Home extends React.Component {
-  state = {
-    properties: [],
-    total_pages: null,
-    next_page: null,
-    loading: true,
-    showOnlyMyProperties: false,
-    currentUser: null,
+const Home = () => {
+  const [properties, setProperties] = useState([]);
+  const [totalPages, setTotalPages] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showOnlyMyProperties, setShowOnlyMyProperties] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState(null);
+
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        // Load properties first so guests can see them
+        const propertyData = await fetchPropertiesWithPagination(1);
+        setProperties(propertyData.properties);
+        setTotalPages(propertyData.total_pages);
+        setNextPage(propertyData.next_page);
+
+        // Then try to get user data if they're logged in
+        try {
+          const userData = await fetchAuthenticatedUser();
+          setCurrentUserId(userData.user_id);
+        } catch (error) {
+          // User is not authenticated - that's okay
+          console.log("User not authenticated");
+        }
+      } catch (error) {
+        console.error("Error loading properties:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadInitialData();
+  }, []);
+
+  const toggleMyProperties = () => {
+    setShowOnlyMyProperties((prev) => !prev);
   };
 
-  componentDidMount() {
-    fetch("/api/authenticated")
-      .then(handleErrors)
-      .then((data) => {
-        this.setState({
-          currentUserId: data.user_id,
-        });
-        console.log(data);
-      });
+  const loadMore = async () => {
+    if (!nextPage) return;
 
-    fetch("/api/properties?page=1")
-      .then(handleErrors)
-      .then((data) => {
-        this.setState({
-          properties: data.properties,
-          total_pages: data.total_pages,
-          next_page: data.next_page,
-          loading: false,
-        });
-        console.log(data);
-      });
-  }
-
-  toggleMyProperties = () => {
-    this.setState((prevState) => ({
-      showOnlyMyProperties: !prevState.showOnlyMyProperties,
-    }));
-  };
-
-  loadMore = () => {
-    if (this.state.next_page === null) {
-      return;
+    setLoading(true);
+    try {
+      const data = await fetchPropertiesWithPagination(nextPage);
+      setProperties((prev) => [...prev, ...data.properties]);
+      setTotalPages(data.total_pages);
+      setNextPage(data.next_page);
+    } catch (error) {
+      console.error("Error loading more properties:", error);
+    } finally {
+      setLoading(false);
     }
-    this.setState({ loading: true });
-    fetch(`/api/properties?page=${this.state.next_page}`)
-      .then(handleErrors)
-      .then((data) => {
-        this.setState({
-          properties: this.state.properties.concat(data.properties),
-          total_pages: data.total_pages,
-          next_page: data.next_page,
-          loading: false,
-        });
-      });
   };
 
-  render() {
-    const {
-      properties,
-      next_page,
-      loading,
-      currentUserId,
-      showOnlyMyProperties,
-    } = this.state;
+  const filteredProperties =
+    showOnlyMyProperties && currentUserId
+      ? properties.filter((property) => property.user_id === currentUserId)
+      : properties;
 
-    const filteredProperties =
-      showOnlyMyProperties && currentUserId
-        ? properties.filter((property) => property.user_id === currentUserId)
-        : properties;
-
-    return (
-      <Layout>
-        <div>
-          <div className="home-header">
-            <ul>
-              <li>
-                {currentUserId && (
-                  <button onClick={this.toggleMyProperties}>
-                    {showOnlyMyProperties
-                      ? "Show All Properties"
-                      : "Show My Properties"}
-                  </button>
-                )}
-              </li>
-              <li>
-                <button onClick={this.toggleMyBookings}>My Bookings</button>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <div className="properties-container">
-              {filteredProperties.map((property) => {
-                return (
-                  <div key={property.id}>
-                    <a href={`/property/${property.id}`}>
-                      <div
-                        className="property-image"
-                        style={{
-                          backgroundImage: `url(${property.image_url})`,
-                        }}
-                        role="img"
-                        aria-label={property.title}
-                      />
-                      <p>
-                        <small>
-                          <b>{property.city}</b>
-                        </small>
-                      </p>
-                      <h6>{property.title}</h6>
-                      <p>
-                        <small>${property.price_per_night} USD/night</small>
-                      </p>
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
-            {loading && <p>loading...</p>}
-            {loading || next_page === null || (
-              <div>
-                <button onClick={this.loadMore}>See more</button>
-              </div>
-            )}
-          </div>
+  return (
+    <Layout>
+      <div>
+        <div className="home-header">
+          <ul>
+            <li>
+              {currentUserId && (
+                <button onClick={toggleMyProperties}>
+                  {showOnlyMyProperties
+                    ? "Show All Properties"
+                    : "Show My Properties"}
+                </button>
+              )}
+            </li>
+            <li>
+              <button onClick={() => (window.location.href = "/bookings")}>
+                My Bookings
+              </button>
+            </li>
+          </ul>
         </div>
-      </Layout>
-    );
-  }
-}
+        <div>
+          <div className="properties-container">
+            {filteredProperties.map((property) => (
+              <div key={property.id}>
+                <a href={`/property/${property.id}`}>
+                  <div
+                    className="property-image"
+                    style={{ backgroundImage: `url(${property.image_url})` }}
+                    role="img"
+                    aria-label={property.title}
+                  />
+                  <p>
+                    <small>
+                      <b>{property.city}</b>
+                    </small>
+                  </p>
+                  <h6>{property.title}</h6>
+                  <p>
+                    <small>${property.price_per_night} USD/night</small>
+                  </p>
+                </a>
+              </div>
+            ))}
+          </div>
+          {loading && <p>loading...</p>}
+          {!loading && nextPage && (
+            <div>
+              <button onClick={loadMore}>See more</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </Layout>
+  );
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
@@ -141,3 +131,5 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(document.createElement("div"))
   );
 });
+
+export default Home;

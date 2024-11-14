@@ -1,46 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import Layout from "@src/layout";
-import { safeCredentials, handleErrors } from "../utils/fetchHelper";
+import { createProperty } from "../utils/api";
 
 const AddProperty = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    fetch(
-      "/api/properties",
-      safeCredentials({
-        method: "POST",
-        body: JSON.stringify({
-          property: {
-            title: e.target.title.value,
-            description: e.target.description.value,
-            city: e.target.city.value,
-            country: e.target.country.value,
-            property_type: e.target.property_type.value,
-            price_per_night: parseFloat(e.target.price_per_night.value),
-            max_guests: parseInt(e.target.max_guests.value),
-            bedrooms: parseInt(e.target.bedrooms.value),
-            beds: parseInt(e.target.beds.value),
-            baths: parseFloat(e.target.baths.value),
-            image_url: e.target.image_url.value,
-          },
-        }),
-      })
-    )
-      .then(handleErrors)
-      .then((response) => {
-        window.location = `/property/${response.property.id}`;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const formData = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      city: e.target.city.value,
+      country: e.target.country.value,
+      property_type: e.target.property_type.value,
+      price_per_night: parseFloat(e.target.price_per_night.value),
+      max_guests: parseInt(e.target.max_guests.value),
+      bedrooms: parseInt(e.target.bedrooms.value),
+      beds: parseInt(e.target.beds.value),
+      baths: parseFloat(e.target.baths.value),
+      image_url: e.target.image_url.value,
+    };
+
+    try {
+      const response = await createProperty(formData);
+      window.location = `/property/${response.property.id}`;
+    } catch (error) {
+      console.error("Error creating property:", error);
+      setError("Failed to create property. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Layout>
       <div className="container">
         <h1 className="text-center mb-4">Become a host</h1>
+        {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title:</label>
@@ -157,8 +158,8 @@ const AddProperty = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            List your home
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? "Creating..." : "List your home"}
           </button>
         </form>
       </div>

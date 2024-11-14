@@ -1,52 +1,34 @@
 import React, { useState, useEffect } from "react";
 import Layout from "@src/layout";
-import { handleErrors } from "../../utils/fetchHelper";
+import { fetchUserProperties, fetchAllPropertyBookings } from "../../utils/api";
 
 import "./../styles/main.scss";
 
 const MyProperties = ({ userId }) => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [expandedPropertyId, setExpandedPropertyId] = useState(null);
   const [propertyBookings, setPropertyBookings] = useState({});
 
-  const fetchUserProperties = async () => {
-    const response = await fetch("/api/properties");
-    const data = await handleErrors(response);
-    return data.properties.filter((property) => property.user_id === userId);
-  };
-
-  const fetchPropertyBookings = async (properties) => {
-    const bookingsPromises = properties.map((property) =>
-      fetch(`/api/properties/${property.id}/bookings`)
-        .then(handleErrors)
-        .then((data) => ({
-          propertyId: property.id,
-          bookings: data.bookings,
-        }))
-    );
-
-    const bookingsResults = await Promise.all(bookingsPromises);
-    const bookingsMap = {};
-    bookingsResults.forEach((result) => {
-      bookingsMap[result.propertyId] = result.bookings;
-    });
-    return bookingsMap;
-  };
-
   useEffect(() => {
+    const loadProperties = async () => {
+      try {
+        const userProperties = await fetchUserProperties();
+        const filteredProperties = userProperties.filter(
+          (property) => property.user_id === userId
+        );
+        setProperties(filteredProperties);
+
+        const bookings = await fetchAllPropertyBookings(filteredProperties);
+        setPropertyBookings(bookings);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (userId) {
-      fetchUserProperties()
-        .then(async (userProperties) => {
-          setProperties(userProperties);
-          const bookings = await fetchPropertyBookings(userProperties);
-          setPropertyBookings(bookings);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          setLoading(false);
-        });
+      loadProperties();
     }
   }, [userId]);
 
@@ -61,9 +43,18 @@ const MyProperties = ({ userId }) => {
   return (
     <div className="container-my-properties">
       <h2>My Properties</h2>
+      <a href="/add-property">Add a new property</a>
       {properties.map((property) => (
         <div key={property.id} className="property-card">
           <h3>{property.title}</h3>
+          <div className="property-actions">
+            <li>
+              <a href={`/property/${property.id}`}>View</a>
+            </li>
+            <li>
+              <a href={`/property/${property.id}/edit`}>Edit</a>
+            </li>
+          </div>
           <div className="property-details">
             <p>
               <strong>Location:</strong> {property.city}, {property.country}
