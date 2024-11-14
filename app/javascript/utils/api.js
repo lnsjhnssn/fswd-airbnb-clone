@@ -18,6 +18,31 @@ export const checkAuth = async () => {
   return handleErrors(response);
 };
 
+// *** Sessions *** //
+export const logoutUser = async () => {
+  const response = await fetch(
+    "/api/sessions/destroy",
+    safeCredentials({
+      method: "DELETE",
+    })
+  );
+  return handleErrors(response);
+};
+
+// Login user
+export const loginUser = async (credentials) => {
+  const response = await fetch(
+    "/api/sessions",
+    safeCredentials({
+      method: "POST",
+      body: JSON.stringify({
+        user: credentials,
+      }),
+    })
+  );
+  return handleErrors(response);
+};
+
 // *** Users *** //
 
 // Signup user
@@ -28,19 +53,6 @@ export const signupUser = async (userData) => {
       method: "POST",
       body: JSON.stringify({
         user: userData,
-      }),
-    })
-  );
-  return handleErrors(response);
-};
-// Login user
-export const loginUser = async (credentials) => {
-  const response = await fetch(
-    "/api/sessions",
-    safeCredentials({
-      method: "POST",
-      body: JSON.stringify({
-        user: credentials,
       }),
     })
   );
@@ -127,6 +139,12 @@ export const fetchBookings = async (propertyId) => {
   };
 };
 
+// Fetch user's bookings (authenticated by session token -> bookings_controller.rb)
+export const fetchMyBookings = async () => {
+  const response = await fetch("/api/bookings/my_bookings");
+  return handleErrors(response);
+};
+
 // Fetch user properties
 export const fetchUserProperties = async () => {
   const response = await fetch("/api/properties");
@@ -149,15 +167,4 @@ export const fetchAllPropertyBookings = async (properties) => {
     bookingsMap[result.propertyId] = result.bookings;
   });
   return bookingsMap;
-};
-
-// *** Sessions *** //
-export const logoutUser = async () => {
-  const response = await fetch(
-    "/api/sessions/destroy",
-    safeCredentials({
-      method: "DELETE",
-    })
-  );
-  return handleErrors(response);
 };

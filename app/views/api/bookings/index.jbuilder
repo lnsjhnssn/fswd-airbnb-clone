@@ -8,5 +8,11 @@ json.bookings do
       json.id booking.user.id
       json.username booking.user.username
     end
+
+    json.property do
+      json.id booking.property.id
+      json.title booking.property.title
+      json.image_url booking.property.image_url
+    end
   end
 end

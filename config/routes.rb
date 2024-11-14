@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resources :sessions, only: [:create, :destroy]
     resources :properties, only: [:index, :show, :create, :update]
-    resources :bookings, only: [:create]
+    resources :bookings, only: [:create] do
+      collection do
+        get 'my_bookings' => 'bookings#get_user_bookings'
+      end
+    end
     resources :charges, only: [:create]
 
     get '/properties/:id/bookings' => 'bookings#get_property_bookings'

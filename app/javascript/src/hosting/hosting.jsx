@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "@src/layout";
 import MyProperties from "./myProperties";
-import MyBookings from "./myBookings";
+import MyTrips from "./myTrips";
 import { checkAuth } from "../../utils/api";
 
 import "./hosting.scss";
@@ -42,10 +42,8 @@ const Hosting = () => {
         <MyProperties userId={userId} />
       </div>
 
-      <h2>Add a property</h2>
-      <h2>Reservations</h2>
       <div>
-        <MyBookings />
+        <MyTrips />
         <p>No reservations yet</p>
       </div>
     </Layout>
