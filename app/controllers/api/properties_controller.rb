@@ -61,8 +61,8 @@ module Api
         :bedrooms,
         :beds,
         :baths,
-        :image_url,
-        :user_id
+        :user_id,
+        images: []
       )
     end
   end
