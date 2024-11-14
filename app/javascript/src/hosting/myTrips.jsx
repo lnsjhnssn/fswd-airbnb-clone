@@ -30,17 +30,22 @@ const MyTrips = () => {
     <div>
       <h2>My Trips</h2>
       {bookings.map((booking) => (
-        <div key={booking.id} className="booking-card">
-          <img src={booking.property.image_url} alt={booking.property.title} />
-          <div className="booking-details">
-            <h3>{booking.property.title}</h3>
-            <p>
-              Dates: {new Date(booking.start_date).toLocaleDateString()} -{" "}
-              {new Date(booking.end_date).toLocaleDateString()}
-            </p>
-            <p>Payment: {booking.paid ? "Paid" : "Pay now"}</p>
+        <a href={`/property/${booking.property.id}`} key={booking.id}>
+          <div className="booking-card">
+            <img
+              src={booking.property.image_url}
+              alt={booking.property.title}
+            />
+            <div className="booking-details">
+              <h3>{booking.property.title}</h3>
+              <p>
+                Dates: {new Date(booking.start_date).toLocaleDateString()} -{" "}
+                {new Date(booking.end_date).toLocaleDateString()}
+              </p>
+              <p>Payment: {booking.paid ? "Paid" : "Pay now"}</p>
+            </div>
           </div>
-        </div>
+        </a>
       ))}
     </div>
   );
