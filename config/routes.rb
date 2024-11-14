@@ -23,14 +23,17 @@ Rails.application.routes.draw do
   # login sign up
   get '/login' => 'static_pages#login'
   
-  # hosting, properties, bookings
+  # property, edit property, add property
   get '/property/:id' => 'static_pages#property'
   get '/property/:id/edit' => 'static_pages#editProperty'
-  get 'booking/:id/success' => 'static_pages#success'
   get '/add-property' => 'static_pages#addProperty'
+
+  # booking success
+  get 'booking/:id/success' => 'static_pages#success'
  
+  # my pages
   get '/hosting' => 'static_pages#hosting'
 
+  # home
   root to: 'static_pages#home'
-
 end
