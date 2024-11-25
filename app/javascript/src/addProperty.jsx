@@ -6,25 +6,32 @@ import { createProperty } from "../utils/api";
 const AddProperty = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [images, setImages] = useState([]);
+
+  const handleFileChange = (e) => {
+    setImages(Array.from(e.target.files));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    const formData = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      city: e.target.city.value,
-      country: e.target.country.value,
-      property_type: e.target.property_type.value,
-      price_per_night: parseFloat(e.target.price_per_night.value),
-      max_guests: parseInt(e.target.max_guests.value),
-      bedrooms: parseInt(e.target.bedrooms.value),
-      beds: parseInt(e.target.beds.value),
-      baths: parseFloat(e.target.baths.value),
-      image_url: e.target.image_url.value,
-    };
+    const formData = new FormData();
+    formData.append("property[title]", "8");
+    formData.append("property[description]", "8");
+    formData.append("property[city]", "8");
+    formData.append("property[country]", "8");
+    formData.append("property[property_type]", "house");
+    formData.append("property[price_per_night]", "8");
+    formData.append("property[max_guests]", "8");
+    formData.append("property[bedrooms]", "8");
+    formData.append("property[beds]", "8");
+    formData.append("property[baths]", "8");
+
+    images.forEach((image, index) => {
+      formData.append(`property[images][]`, image);
+    });
 
     try {
       const response = await createProperty(formData);
@@ -149,13 +156,14 @@ const AddProperty = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="image_url">Image URL:</label>
+            <label htmlFor="images">Images:</label>
             <input
-              type="text"
-              id="image_url"
-              name="image_url"
+              type="file"
+              id="images"
+              name="images"
               className="form-control"
-              required
+              multiple
+              onChange={handleFileChange}
             />
           </div>
           <button type="submit" className="btn btn-primary" disabled={loading}>

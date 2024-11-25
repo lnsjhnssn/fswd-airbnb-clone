@@ -11,24 +11,21 @@ const Property = ({ property_id }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    // Fetch property details
     fetchProperty(property_id).then((data) => {
       setProperty(data.property);
       setLoading(false);
     });
 
-    // Fetch all properties (if needed)
     fetchProperties().then((data) => {
       console.log(data);
     });
 
-    // Check authentication
     checkAuth().then((data) => {
       if (data.authenticated) {
         setCurrentUser(data.username);
       }
     });
-  }, [property_id]); // Only re-run if property_id changes
+  }, [property_id]);
 
   if (loading) {
     return <p>loading...</p>;
@@ -46,8 +43,8 @@ const Property = ({ property_id }) => {
     bedrooms,
     beds,
     baths,
-    image_url,
     user,
+    images = [],
   } = property;
 
   const isHost = currentUser && user && currentUser === user.username;
@@ -56,7 +53,20 @@ const Property = ({ property_id }) => {
     <Layout>
       <div className="property-container">
         <div className="property-hero">
-          <img src={image_url} alt={title} />
+          {images.length > 0 && (
+            <img src={images[0].url} alt={title} className="large-image" />
+          )}
+        </div>
+
+        <div className="property-thumbnails">
+          {images.slice(1).map((image, index) => (
+            <img
+              key={index}
+              src={image.url}
+              alt={`${title} thumbnail ${index + 1}`}
+              className="thumbnail-image"
+            />
+          ))}
         </div>
 
         <div className="property-content">

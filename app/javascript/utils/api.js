@@ -1,4 +1,8 @@
-import { handleErrors, safeCredentials } from "./fetchHelper";
+import {
+  handleErrors,
+  safeCredentials,
+  safeCredentialsForm,
+} from "./fetchHelper";
 
 // *** Authentication *** //
 
@@ -49,7 +53,7 @@ export const loginUser = async (credentials) => {
 export const signupUser = async (userData) => {
   const response = await fetch(
     "/api/users",
-    safeCredentials({
+    safeCredentialsForm({
       method: "POST",
       body: JSON.stringify({
         user: userData,
@@ -62,14 +66,30 @@ export const signupUser = async (userData) => {
 // *** Properties *** //
 
 // Create property
-export const createProperty = async (propertyData) => {
+export const createProperty = async (formData) => {
   const response = await fetch(
     "/api/properties",
-    safeCredentials({
+    safeCredentialsForm({
       method: "POST",
-      body: JSON.stringify({
-        property: propertyData,
-      }),
+      body: formData,
+    })
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Error: ${errorData.error || "Unknown error"}`);
+  }
+
+  return response.json();
+};
+
+// Create property with images
+export const createPropertyWithImages = async (propertyData) => {
+  const response = await fetch(
+    "/api/properties",
+    safeCredentialsForm({
+      method: "POST",
+      body: FormData,
     })
   );
 
