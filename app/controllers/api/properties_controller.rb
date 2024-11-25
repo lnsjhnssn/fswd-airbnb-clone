@@ -6,13 +6,16 @@ module Api
       session = Session.find_by(token: token)
       return render json: { error: 'user not logged in' }, status: :unauthorized if !session
 
-      @property = Property.new(property_params)
+      Rails.logger.info "Received params: #{params.inspect}"
+
+      @property = Property.new(property_params) 
       @property.user = session.user
 
       if @property.save
         render 'api/properties/create', status: :created
       else
-        render json: { success: false }, status: :bad_request
+        Rails.logger.error "Property save failed: #{@property.errors.full_messages}"
+        render json: { success: false, errors: @property.errors.full_messages }, status: :bad_request
       end
     end       
 
@@ -50,7 +53,7 @@ module Api
     private
 
     def property_params
-      params.require(:property).permit(
+      permitted_params = params.require(:property).permit(
         :title,
         :description,
         :city,
@@ -61,9 +64,11 @@ module Api
         :bedrooms,
         :beds,
         :baths,
-        :image_url,
-        :user_id
+        :user_id,
+        images: []
       )
+      Rails.logger.info "Permitted params: #{permitted_params.inspect}"
+      permitted_params
     end
   end
 end

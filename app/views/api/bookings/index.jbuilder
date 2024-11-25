@@ -12,7 +12,6 @@ json.bookings do
     json.property do
       json.id booking.property.id
       json.title booking.property.title
-      json.image_url booking.property.image_url
     end
   end
 end

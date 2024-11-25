@@ -517,3 +517,24 @@ button {
     background-color: #fff8f8;
   }
 }
+
+.large-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px; /* Rounded corners for a polished look */
+  object-fit: cover; /* Ensures the image covers the container without distortion */
+}
+
+.thumbnail-image {
+  width: 100px; /* Fixed width for thumbnails */
+  height: 100px; /* Fixed height for thumbnails */
+  border: 1px solid #ddd; /* Border for a thumbnail effect */
+  border-radius: 4px; /* Slightly rounded corners */
+  padding: 5px; /* Padding for a thumbnail effect */
+  object-fit: cover; /* Ensures the image covers the container without distortion */
+  transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.thumbnail-image:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5); /* Shadow effect on hover */
+}
