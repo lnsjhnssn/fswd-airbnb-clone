@@ -52,21 +52,23 @@ const Property = ({ property_id }) => {
   return (
     <Layout>
       <div className="property-container">
-        <div className="property-hero">
-          {images.length > 0 && (
-            <img src={images[0].url} alt={title} className="large-image" />
-          )}
-        </div>
+        <div className="images-container">
+          <div className="main-img-container">
+            {images.length > 0 && (
+              <img src={images[0].url} alt={title} className="large-image" />
+            )}
+          </div>
 
-        <div className="property-thumbnails">
-          {images.slice(1).map((image, index) => (
-            <img
-              key={index}
-              src={image.url}
-              alt={`${title} thumbnail ${index + 1}`}
-              className="thumbnail-image"
-            />
-          ))}
+          <div className="thumbnails-img-container">
+            {images.slice(1).map((image, index) => (
+              <img
+                key={index}
+                src={image.url}
+                alt={`${title} thumbnail ${index + 1}`}
+                className="thumbnail-image"
+              />
+            ))}
+          </div>
         </div>
 
         <div className="property-content">

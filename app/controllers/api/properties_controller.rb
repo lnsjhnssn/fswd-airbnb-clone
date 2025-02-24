@@ -49,7 +49,24 @@ module Api
 
       render 'api/properties/show', status: :ok
     end
- 
+
+    def destroy
+      token = cookies.signed[:airbnb_session_token]
+      session = Session.find_by(token: token)
+      return render json: { error: 'user not logged in' }, status: :unauthorized if !session
+
+      @property = Property.find_by(id: params[:id])
+      return render json: { error: 'property not found' }, status: :not_found if !@property
+      
+      return render json: { error: 'unauthorized' }, status: :unauthorized if @property.user != session.user
+
+      if @property.destroy
+        render json: { success: true }, status: :ok
+      else
+        render json: { success: false, errors: @property.errors.full_messages }, status: :bad_request
+      end
+    end
+
     private
 
     def property_params

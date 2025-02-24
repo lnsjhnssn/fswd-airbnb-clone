@@ -18,16 +18,19 @@ const AddProperty = () => {
     setError(null);
 
     const formData = new FormData();
-    formData.append("property[title]", "8");
-    formData.append("property[description]", "8");
-    formData.append("property[city]", "8");
-    formData.append("property[country]", "8");
-    formData.append("property[property_type]", "house");
-    formData.append("property[price_per_night]", "8");
-    formData.append("property[max_guests]", "8");
-    formData.append("property[bedrooms]", "8");
-    formData.append("property[beds]", "8");
-    formData.append("property[baths]", "8");
+    formData.append("property[title]", e.target.title.value);
+    formData.append("property[description]", e.target.description.value);
+    formData.append("property[city]", e.target.city.value);
+    formData.append("property[country]", e.target.country.value);
+    formData.append("property[property_type]", e.target.property_type.value);
+    formData.append(
+      "property[price_per_night]",
+      e.target.price_per_night.value
+    );
+    formData.append("property[max_guests]", e.target.max_guests.value);
+    formData.append("property[bedrooms]", e.target.bedrooms.value);
+    formData.append("property[beds]", e.target.beds.value);
+    formData.append("property[baths]", e.target.baths.value);
 
     images.forEach((image, index) => {
       formData.append(`property[images][]`, image);
