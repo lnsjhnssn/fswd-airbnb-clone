@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     # Add routes below this line
     resources :users, only: [:create]
     resources :sessions, only: [:create, :destroy]
-    resources :properties, only: [:index, :show, :create, :update]
+    resources :properties, only: [:index, :show, :create, :update, :destroy]
     resources :bookings, only: [:create, :show] do
       collection do
         get 'my_bookings' => 'bookings#get_user_bookings'

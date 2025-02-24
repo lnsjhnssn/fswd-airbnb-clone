@@ -111,6 +111,23 @@ export const updateProperty = async (propertyId, propertyData) => {
   const data = await handleErrors(response);
   return data;
 };
+
+export const deleteProperty = async (propertyId) => {
+  const response = await fetch(
+    `/api/properties/${propertyId}`,
+    safeCredentials({
+      method: "DELETE",
+    })
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Error: ${errorData.error || "Unknown error"}`);
+  }
+
+  return response.json();
+};
+
 // Fetch all properties
 export const fetchProperties = async () => {
   const response = await fetch("/api/properties");
