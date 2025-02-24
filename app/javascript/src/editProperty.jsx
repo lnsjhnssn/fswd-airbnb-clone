@@ -6,6 +6,8 @@ import { fetchProperty, updateProperty } from "../utils/api";
 const EditProperty = () => {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [images, setImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
 
   const propertyId = window.location.pathname.split("/")[2];
 
@@ -13,7 +15,8 @@ const EditProperty = () => {
     const loadProperty = async () => {
       try {
         const data = await fetchProperty(propertyId);
-        setProperty(data);
+        setProperty(data.property);
+        setExistingImages(data.property.images || []);
       } catch (error) {
         console.log(error);
       } finally {
@@ -27,19 +30,24 @@ const EditProperty = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      title: e.target.title.value,
-      description: e.target.description.value,
-      city: e.target.city.value,
-      country: e.target.country.value,
-      property_type: e.target.property_type.value,
-      price_per_night: parseFloat(e.target.price_per_night.value),
-      max_guests: parseInt(e.target.max_guests.value),
-      bedrooms: parseInt(e.target.bedrooms.value),
-      beds: parseInt(e.target.beds.value),
-      baths: parseFloat(e.target.baths.value),
-      image_url: e.target.image_url.value,
-    };
+    const formData = new FormData();
+    formData.append("property[title]", e.target.title.value);
+    formData.append("property[description]", e.target.description.value);
+    formData.append("property[city]", e.target.city.value);
+    formData.append("property[country]", e.target.country.value);
+    formData.append("property[property_type]", e.target.property_type.value);
+    formData.append(
+      "property[price_per_night]",
+      e.target.price_per_night.value
+    );
+    formData.append("property[max_guests]", e.target.max_guests.value);
+    formData.append("property[bedrooms]", e.target.bedrooms.value);
+    formData.append("property[beds]", e.target.beds.value);
+    formData.append("property[baths]", e.target.baths.value);
+
+    images.forEach((image) => {
+      formData.append("property[images][]", image);
+    });
 
     try {
       const response = await updateProperty(propertyId, formData);
@@ -47,6 +55,10 @@ const EditProperty = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleFileChange = (e) => {
+    setImages(Array.from(e.target.files));
   };
 
   if (loading) {
@@ -178,14 +190,24 @@ const EditProperty = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="image_url">Image URL:</label>
+            <label>Current Images:</label>
+            <div className="existing-images">
+              {existingImages.map((image, index) => (
+                <div key={index} className="image-preview">
+                  <img src={image.url} alt={`Property image ${index + 1}`} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="images">Change Images:</label>
             <input
-              type="text"
-              id="image_url"
-              name="image_url"
+              type="file"
+              id="images"
+              name="images"
               className="form-control"
-              required
-              defaultValue={property?.image_url}
+              multiple
+              onChange={handleFileChange}
             />
           </div>
           <button type="submit" className="btn btn-primary">

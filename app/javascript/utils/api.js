@@ -98,14 +98,12 @@ export const createPropertyWithImages = async (propertyData) => {
 };
 
 // Update property by ID
-export const updateProperty = async (propertyId, propertyData) => {
+export const updateProperty = async (propertyId, formData) => {
   const response = await fetch(
     `/api/properties/${propertyId}`,
-    safeCredentials({
+    safeCredentialsForm({
       method: "PUT",
-      body: JSON.stringify({
-        property: propertyData,
-      }),
+      body: formData,
     })
   );
   const data = await handleErrors(response);

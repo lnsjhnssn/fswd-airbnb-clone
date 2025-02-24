@@ -73,6 +73,19 @@ const MyProperties = ({ userId }) => {
       {properties.map((property) => (
         <div key={property.id} className="property-card">
           <h3>{property.title}</h3>
+
+          {/* Property Images Grid */}
+          <div className="existing-images">
+            {property.images?.map((image, index) => (
+              <div key={index} className="image-preview">
+                <img
+                  src={image.url}
+                  alt={`${property.title} - Image ${index + 1}`}
+                />
+              </div>
+            ))}
+          </div>
+
           <div className="property-details">
             <p>
               <strong>Location:</strong> {property.city}, {property.country}
@@ -80,7 +93,22 @@ const MyProperties = ({ userId }) => {
             <p>
               <strong>Price:</strong> ${property.price_per_night}/night
             </p>
+            <p>
+              <strong>Type:</strong> {property.property_type}
+            </p>
+            <p>
+              <strong>Description:</strong> {property.description}
+            </p>
+            <div className="specs">
+              <p>
+                <strong>Guests:</strong> {property.max_guests} •
+                <strong> Bedrooms:</strong> {property.bedrooms} •
+                <strong> Beds:</strong> {property.beds} •
+                <strong> Baths:</strong> {property.baths}
+              </p>
+            </div>
           </div>
+
           <div className="property-actions">
             <ul className="action-list">
               <li>
