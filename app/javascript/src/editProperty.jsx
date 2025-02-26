@@ -214,6 +214,14 @@ const EditProperty = () => {
             Update Property
           </button>
         </form>
+        <div>
+          <button
+            onClick={() => (window.location.href = "/hosting")}
+            className="btn-nav"
+          >
+            Go back to hosting page
+          </button>
+        </div>
       </div>
     </Layout>
   );
