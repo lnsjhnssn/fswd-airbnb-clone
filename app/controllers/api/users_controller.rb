@@ -6,9 +6,10 @@ module Api
       if @user.save
         render 'api/users/create', status: :created
       else
+        Rails.logger.error("User creation failed: #{@user.errors.full_messages}")
         render json: { 
           success: false, 
-          errors: @user.errors.full_messages 
+          error: @user.errors.full_messages.join(", ")
         }, status: :bad_request
       end
     end

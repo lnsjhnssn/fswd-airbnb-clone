@@ -31,7 +31,9 @@ const SignupWidget = ({ toggle }) => {
       }
     } catch (error) {
       console.error("Signup error:", error);
-      setError(error.message || "Could not sign up.");
+      const errorMessage =
+        error.response?.json?.error || error.message || "Could not sign up.";
+      setError(errorMessage);
     }
   };
 
