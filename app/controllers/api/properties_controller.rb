@@ -60,10 +60,14 @@ module Api
       
       return render json: { error: 'unauthorized' }, status: :unauthorized if @property.user != session.user
 
-      if @property.destroy
-        render json: { success: true }, status: :ok
-      else
-        render json: { success: false, errors: @property.errors.full_messages }, status: :bad_request
+      begin
+        if @property.destroy
+          render json: { success: true }, status: :ok
+        else
+          render json: { success: false, errors: @property.errors.full_messages }, status: :bad_request
+        end
+      rescue => e
+        render json: { success: false, error: 'Failed to delete property and associated bookings' }, status: :internal_server_error
       end
     end
 

@@ -35,7 +35,7 @@ const Navbar = () => {
                 onClick={() => (window.location.href = "/hosting")}
                 className="btn-nav"
               >
-                Switch to hosting
+                My Properties
               </button>
             </li>
             <li>

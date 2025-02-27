@@ -35,7 +35,7 @@ const Hosting = () => {
   return (
     <Layout>
       <div className="container-hosting">
-        {/* <h1>Welcome, {username}!</h1> */}
+        <h1>Welcome, {username}!</h1>
       </div>
 
       <div>
@@ -44,7 +44,6 @@ const Hosting = () => {
 
       <div>
         <MyTrips />
-        <p>No reservations yet</p>
       </div>
     </Layout>
   );
