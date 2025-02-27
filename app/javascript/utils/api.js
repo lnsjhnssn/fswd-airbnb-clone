@@ -53,7 +53,7 @@ export const loginUser = async (credentials) => {
 export const signupUser = async (credentials) => {
   const response = await fetch(
     "/api/users",
-    safeCredentialsForm({
+    safeCredentials({
       method: "POST",
       body: JSON.stringify({
         user: credentials,
