@@ -38,7 +38,11 @@ const MyProperties = ({ userId }) => {
   }, [userId]);
 
   const handleDeleteProperty = async (propertyId) => {
-    if (!window.confirm("Are you sure you want to delete this property?")) {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete this property? This will also delete all associated bookings."
+      )
+    ) {
       return;
     }
 
@@ -50,7 +54,9 @@ const MyProperties = ({ userId }) => {
       );
     } catch (error) {
       console.error("Error deleting property:", error);
-      alert("Failed to delete property. Please try again.");
+      alert(
+        "Failed to delete property: " + (error.message || "Please try again.")
+      );
     } finally {
       setDeleteLoading(false);
     }
