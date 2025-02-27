@@ -33,6 +33,7 @@ Rails.application.routes.draw do
  
   # my pages
   get '/hosting' => 'static_pages#hosting'
+  get '/trips' => 'static_pages#trips'
 
   # webhooks
   resources :webhooks, only: [:create];

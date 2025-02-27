@@ -40,10 +40,10 @@ const Navbar = () => {
             </li>
             <li>
               <button
-                onClick={() => (window.location.href = "/upcoming-trips")}
+                onClick={() => (window.location.href = "/trips")}
                 className="btn-nav"
               >
-                Upcoming trips
+                My Trips
               </button>
             </li>
             <li>
