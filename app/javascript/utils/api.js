@@ -50,13 +50,13 @@ export const loginUser = async (credentials) => {
 // *** Users *** //
 
 // Signup user
-export const signupUser = async (userData) => {
+export const signupUser = async (credentials) => {
   const response = await fetch(
     "/api/users",
     safeCredentialsForm({
       method: "POST",
       body: JSON.stringify({
-        user: userData,
+        user: credentials,
       }),
     })
   );
