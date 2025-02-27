@@ -49,9 +49,9 @@ const AddProperty = () => {
 
   return (
     <Layout>
-      <div className="container">
+      <div>
         <h1 className="text-center mb-4">Become a host</h1>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div>{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title:</label>

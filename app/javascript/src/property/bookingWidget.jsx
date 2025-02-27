@@ -54,16 +54,9 @@ class BookingWidget extends React.Component {
 
         stripe
           .redirectToCheckout({
-            // Make the id field from the Checkout Session creation API response
-            // available to this file, so you can provide it as parameter here
-            // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
             sessionId: response.charge.checkout_session_id,
           })
-          .then((result) => {
-            // If `redirectToCheckout` fails due to a browser or network
-            // error, display the localized error message to your customer
-            // using `result.error.message`.
-          });
+          .then((result) => {});
       })
       .catch((error) => {
         console.log(error);
@@ -113,7 +106,7 @@ class BookingWidget extends React.Component {
     const { authenticated, startDate, endDate, focusedInput } = this.state;
     if (!authenticated) {
       return (
-        <div className="border p-4 mb-4">
+        <div>
           Please{" "}
           <a href={`/login?redirect_url=${window.location.pathname}`}>log in</a>{" "}
           to make a booking.
