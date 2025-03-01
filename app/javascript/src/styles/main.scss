@@ -1,22 +1,10 @@
 :root {
-  --orange: #ff9500;
-  --pink: #ff5799;
-  --green: #95cf3f;
-  --text-color-black: #222222;
-  --blue: #457cc1;
-  --blue-light: rgb(32, 139, 254);
-  --blue-light-hover: rgb(2, 127, 253);
-  --box-shadow-focus: rgba(0, 0, 0, 0.1);
-  --grey: rgb(220, 219, 219);
-  --grey-hover: #d3d3d356;
-  --red: #ff1d4f;
-  --white: white;
-  --yellow: #ffc200;
-  --bg-color: #f9f3f5;
-  --airbnb-brand-color: #ff385c;
-  --airbnb-brand-color-hover: #f83155;
-  --border-radius-img: 12px;
-  --border-radius-btn: 24px;
+  --text-color: #222;
+  --primary-color: #457cc1;
+  --error-color: #dc3545;
+  --border-color: #ddd;
+  --bg-color: #f9f9f9;
+  --white: #fff;
 }
 
 *,
@@ -25,6 +13,21 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+body {
+  background-color: var(--white);
+}
+
+h2,
+h3 {
+  margin-bottom: 0.5rem;
 }
 
 a {
@@ -36,169 +39,77 @@ ul {
   list-style: none;
 }
 
-/* General */
-
-html {
-  font-family: "Arial", sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  background-color: var(--white);
-  color: var(--text-color-black);
-  height: 100vh;
-  width: 100vw;
-
-  @media screen and (min-width: 768px) {
-    font-size: 16px;
-  }
-}
-
-h2 {
-  font-size: 1.6rem;
-  font-weight: 600;
-}
-
-h3 {
-  font-size: 1.6rem;
-  font-weight: 600;
-}
-
 button {
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  background-color: transparent;
-  color: inherit;
+  padding: 0.5rem;
+  background-color: var(--primary-color);
+  color: var(--white);
   border: none;
-  border-radius: var(--border-radius-btn);
   cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: var(--grey-hover);
-  }
-
-  &:active {
-    background-color: var(--airbnb-brand-color-hover);
-  }
 }
 
+input,
+textarea,
+select {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Layout */
 .app-layout {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  height: 100vh;
-  width: 100vw;
-  padding: 1rem 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
-
-  @media (min-width: 744px) {
-    padding: 1.5rem 2.2rem;
-  }
-
-  // @media (min-width: 1128px) {
-  //   padding: 1.7rem 3rem;
-  // }
+  padding: 1rem;
 }
 
-// LoginWidget
+/* Navigation */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Login/Signup */
 .login-container,
 .signup-container {
-  text-align: center;
-  padding-top: 3rem;
-  max-width: 22rem;
-  margin: 0 auto;
+  max-width: 400px;
+  margin: 1rem auto;
 }
 
 .login-widget,
 .signup-widget {
-  margin: 2rem auto 1rem;
-  padding: 0.6rem 2rem 2rem;
-  border-radius: 4px;
-  border: 3px dotted var(--grey);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.login-widget h2,
-.signup-widget h2 {
-  font-size: 1rem;
-  margin: 0.8rem 0 1rem;
-}
-
-.login-widget form,
-.signup-widget form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.login-widget input,
-.signup-widget input {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.login-widget button[type="submit"],
-.signup-widget button[type="submit"] {
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  background-color: var(--blue-light);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.login-widget button[type="submit"]:hover {
-  background-color: var(--blue-light-hover);
-}
-
-.login-widget button[type="submit"]:hover {
-  background-color: var(--blue-light-hover);
+  padding: 1rem;
+  border: 1px solid var(--border-color);
 }
 
 .error {
-  color: #dc3545;
-  margin: 0;
+  color: var(--error-color);
   font-size: 0.875rem;
-}
-
-.signup-prompt {
-  margin-top: 1rem;
-  border-top: 1px solid #eee;
-  padding-top: 1rem;
 }
 
 .link-button {
   background: none;
   border: none;
-  color: var(--blue);
+  color: var(--primary-color);
   cursor: pointer;
-  font-size: 0.7rem;
-  font-weight: 600;
   text-decoration: underline;
   padding: 0;
 }
 
-@media screen and (max-width: 480px) {
-  .login-widget {
-    margin: 1rem auto;
-    padding: 1rem;
-  }
-}
-
-/* Home.jsx */
-
+/* Properties */
 .properties-container {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 1.3rem;
-  background-color: var(--white);
+  gap: 1rem;
 
   @media screen and (min-width: 550px) {
     grid-template-columns: repeat(2, 1fr);
@@ -211,403 +122,105 @@ button {
   @media screen and (min-width: 1128px) {
     grid-template-columns: repeat(4, 1fr);
   }
-
-  .img-property-list-container {
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-    border-radius: var(--border-radius-img);
-  }
-
-  .img-property-list {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
 }
 
+.img-property-list-container {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.img-property-list,
 .large-image {
   width: 100%;
-  background-color: var(--grey);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  aspect-ratio: 1 / 1;
-  border-radius: var(--border-radius-img);
-
-  &:hover {
-    // transform: scale(1.02); // Slight zoom effect on hover
-  }
+  height: 100%;
+  object-fit: cover;
 }
 
-.home-header {
-  ul {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-}
-
-/* Layout.jsx */
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.navbar-brand {
-  color: var(--airbnb-brand-color);
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-.nav-links {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 2rem;
-
-  li a {
-    text-decoration: none;
-    transition: color 0.2s ease;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-/* Property.jsx */
-
+/* Property detail */
 .images-container {
   display: grid;
   grid-template-columns: 1fr;
+  margin-bottom: 1rem;
 
   @media (min-width: 744px) {
-    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 9px;
-  }
-
-  .main-img-container {
-    height: 440px;
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-
-    @media (min-width: 744px) {
-      margin-left: 0;
-      margin-right: 0;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 0px;
-
-      @media (min-width: 744px) {
-        // border-radius: var(--border-radius-img);
-      }
-    }
-  }
-
-  .thumbnails-img-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 9px;
-
-    .main-img-container {
-      height: 440px;
-      margin-left: -1.5rem;
-      margin-right: -1.5rem;
-
-      @media (min-width: 744px) {
-        margin-left: 0;
-        margin-right: 0;
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 0px;
-
-        @media (min-width: 744px) {
-          // border-radius: var(--border-radius-img);
-        }
-      }
-    }
-
-    .thumbnail-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      // border-radius: var(--border-radius-img);
-      object-fit: cover;
-      transition: box-shadow 0.3s ease;
-    }
-
-    .thumbnail-image:hover {
-      box-shadow: 0 0 2px 1px var(--grey-hover);
-    }
+    gap: 0.5rem;
   }
 }
 
-.property-header {
-  h3 {
-    margin: 1.2rem 0 0.8rem;
-  }
+.main-img-container {
+  width: 100%;
+  height: auto;
 }
 
-.property-specs {
-  ul {
-    display: inline-block;
-    padding: 0;
-    text-align: center;
-
-    font-weight: 400;
-  }
-  li {
-    display: inline;
-    white-space: nowrap;
-  }
-  li:not(:last-child):after {
-    content: " • ";
-  }
+.thumbnails-img-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
 }
 
-.property-host {
-  margin: 1.5rem 0;
-  border-top: 1px solid var(--grey);
-  padding-top: 1.5rem;
-  border-bottom: 1px solid var(--grey);
-  padding-bottom: 1.5rem;
-
-  @media (min-width: 1024px) {
-    max-width: 600px;
-  }
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+.property-specs li {
+  display: inline;
+}
+
+.property-specs li:not(:last-child):after {
+  content: " • ";
+}
+
+.property-host,
 .property-description {
-  max-width: 600px;
-  margin: 1.5rem 0;
-}
-
-.btn-edit-property {
-  background-color: var(--grey-hover);
-  color: var(--black);
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--text-color-black);
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-color);
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 1rem;
 
   @media (min-width: 1128px) {
     grid-template-columns: 2fr 1fr;
   }
 }
-// Booking widget container
-.booking-widget-container {
-}
 
-.btn-booking {
-  background-color: var(--airbnb-brand-color);
-  color: var(--white);
-  border-radius: 7px;
-
-  font-size: 0.8rem;
-
-  &:hover {
-    background-color: var(--airbnb-brand-color-hover);
-  }
-
-  &:active {
-    background-color: var(--airbnb-brand-color-hover);
-  }
-}
-
-.btn-host {
-  border: 1px solid var(--grey);
-}
-
-.footer {
-  padding: 1rem 2rem;
-  background-color: #f7f7f7;
-  text-align: center;
-
-  p {
-    color: #717171;
-    margin: 0;
-  }
-}
-
-/* Hosting */
-
-.container-hosting {
-  max-width: 900px;
-}
-
+/* Property management */
 .container-my-properties {
-  margin: 2rem auto 0;
-  max-width: 900px;
+  margin: 1rem 0;
+}
 
-  h2 {
-    margin: 2rem 0;
-  }
-
-  .property-card {
-    border-bottom: 1px solid var(--grey);
-    padding: 2rem 0;
-
-    .property-details {
-      margin: 2rem 0;
-    }
-
-    h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .property-actions {
-      list-style: none;
-
-      a {
-        text-decoration: underline;
-
-        &:hover {
-          text-decoration: none;
-        }
-      }
-    }
-  }
-  .btn-add-property {
-    background-color: var(--airbnb-brand-color);
-    color: var(--white);
-    padding: 0.75rem;
-    border-radius: var(--border-radius-btn);
-  }
+.property-card {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .action-list {
   display: flex;
-  gap: 1.5rem;
-  margin: 2rem 0;
+  gap: 1rem;
 }
 
-.action-link {
-  &.btn-delete {
-    padding: 0;
-    margin: 0;
-    text-decoration: underline;
-    font-size: 1rem;
-
-    &:hover {
-      text-decoration: none;
-      background-color: transparent;
-    }
-  }
-}
-
-.bookings-section {
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #eee;
-}
-
-.bookings-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.booking-item {
-  padding: 0.25rem 0;
-  color: #666;
-}
-
-.loading-text,
-.no-bookings {
-  color: #666;
-  font-style: italic;
-  margin: 0;
-}
-
+/* Bookings */
 .bookings-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
-
-  th,
-  td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-  }
-
-  th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-  }
-
-  .status {
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.875rem;
-
-    &.upcoming {
-      background-color: #e3f2fd;
-      color: #1976d2;
-    }
-
-    &.active {
-      background-color: #e8f5e9;
-      color: #2e7d32;
-    }
-
-    &.completed {
-      background-color: #f5f5f5;
-      color: #616161;
-    }
-  }
-
-  .payment-status {
-    font-weight: 500;
-
-    &.paid {
-      color: #2ecc71;
-    }
-
-    &.pending {
-      color: #f39c12;
-    }
-  }
-
-  tr.paid-booking {
-    background-color: #f8fff8;
-  }
-
-  tr.unpaid-booking {
-    background-color: #fff8f8;
-  }
 }
 
-// .large-image {
-//   width: 100%;
-//   height: auto;
-//   border-radius: 8px; /* Rounded corners for a polished look */
-//   object-fit: cover; /* Ensures the image covers the container without distortion */
-// }
+.bookings-table th,
+.bookings-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
 
+/* Image grid */
 .existing-images {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -625,4 +238,11 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Footer */
+.footer {
+  padding: 1rem 0;
+  text-align: center;
+  margin-top: 2rem;
 }
