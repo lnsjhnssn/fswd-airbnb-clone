@@ -7,11 +7,11 @@ Rails.application.routes.draw do
     resources :sessions, only: [:create, :destroy]
     resources :properties, only: [:index, :show, :create, :update, :destroy]
     resources :bookings, only: [:create, :show] do
-     
       collection do
         get 'my_bookings' => 'bookings#get_user_bookings'
       end
     end
+    
     resources :charges, only: [:create]
     
 
