@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "@src/layout";
 import MyProperties from "./myProperties";
-import MyTrips from "./myTrips";
 import { checkAuth } from "../../utils/api";
 
 import "./hosting.scss";
@@ -40,10 +39,6 @@ const Hosting = () => {
 
       <div>
         <MyProperties userId={userId} />
-      </div>
-
-      <div>
-        <MyTrips />
       </div>
     </Layout>
   );

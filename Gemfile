@@ -15,6 +15,8 @@ gem 'webpacker', '~> 5.0'
 gem 'kaminari'
 # Use Stripe for receiving payments
 gem 'stripe'
+# Use Cloudinary for image storage
+gem 'cloudinary'
 # Use Uglifier as compressor for JavaScript assets
 # gem 'uglifier', '~> 4.2.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
