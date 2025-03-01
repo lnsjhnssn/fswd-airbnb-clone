@@ -72,7 +72,7 @@ const EditProperty = () => {
   return (
     <Layout>
       <div className="container">
-        <h1 className="text-center mb-4">Edit Property</h1>
+        <h1>Edit Property</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title:</label>
@@ -210,15 +210,10 @@ const EditProperty = () => {
               onChange={handleFileChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Update Property
-          </button>
+          <button type="submit">Update Property</button>
         </form>
         <div>
-          <button
-            onClick={() => (window.location.href = "/hosting")}
-            className="btn-nav"
-          >
+          <button onClick={() => (window.location.href = "/hosting")}>
             Go back to hosting page
           </button>
         </div>

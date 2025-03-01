@@ -38,14 +38,14 @@ const Success = () => {
 
   return (
     <Layout>
-      <div className="container mt-5">
-        <div className="card">
-          <div className="card-header bg-success text-white">
-            <h3 className="mb-0">Your booking is being processed</h3>
+      <div>
+        <div>
+          <div>
+            <h3>Your booking is being processed</h3>
           </div>
-          <div className="card-body">
+          <div>
             {booking && (
-              <div className="booking-details mb-4">
+              <div>
                 <h4>{booking.property.title}</h4>
                 <p>
                   Check-in: {new Date(booking.start_date).toLocaleDateString()}
@@ -56,14 +56,14 @@ const Success = () => {
                 <p>
                   Payment Status:{" "}
                   {booking.charges.some((charge) => charge.complete) ? (
-                    <span className="text-success">Paid</span>
+                    <span>Paid</span>
                   ) : (
-                    <span className="text-warning">Processing</span>
+                    <span>Processing</span>
                   )}
                 </p>
               </div>
             )}
-            <div className="alert alert-success">
+            <div>
               <p>
                 We have received your payment and are finalizing your booking
                 details. You will receive a confirmation email shortly.

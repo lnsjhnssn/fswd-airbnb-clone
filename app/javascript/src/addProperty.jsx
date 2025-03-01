@@ -50,7 +50,7 @@ const AddProperty = () => {
   return (
     <Layout>
       <div>
-        <h1 className="text-center mb-4">Become a host</h1>
+        <h1>Become a host</h1>
         {error && <div>{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">

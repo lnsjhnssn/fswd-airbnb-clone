@@ -28,7 +28,7 @@ const ListOfTrips = () => {
 
   return (
     <div>
-      <ul className="trips-list">
+      <ul>
         {bookings.map((booking) => (
           <li key={booking.id}>
             <a href={`/property/${booking.property.id}`}>
