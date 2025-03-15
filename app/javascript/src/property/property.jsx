@@ -103,14 +103,14 @@ const Property = ({ property_id }) => {
                 <p>{description}</p>
               </div>
               {isHost && (
-                <button
+                <a
                   onClick={() =>
                     (window.location.href = `/property/${id}/edit`)
                   }
-                  className="btn-edit-property"
+                  className="link-with-background grey"
                 >
                   Edit Property
-                </button>
+                </a>
               )}
             </div>
             <div className="grid-2">

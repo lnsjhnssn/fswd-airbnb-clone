@@ -7,7 +7,12 @@ const Trips = () => {
   return (
     <Layout>
       <div className="container">
-        <h2>My Trips</h2>
+        <div className="header-container">
+          <h2>My Trips</h2>
+          <a href="/" className="link-with-background pink">
+            Book a new trip
+          </a>
+        </div>
         <ListOfTrips />
       </div>
     </Layout>

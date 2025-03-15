@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { checkAuth } from "../../utils/api";
 import SignoutButton from "../login/signoutButton";
-
+import logo from "../assets/logo.png";
 const Navbar = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -21,60 +21,55 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <button
-        className="navbar-brand"
-        onClick={() => (window.location.href = "/")}
-      >
-        Airbnb
-      </button>
+      <h1 className="bnb-logo" onClick={() => (window.location.href = "/")}>
+        {/* <img src={logo} alt="bnb-logo" /> */}
+        bnb
+      </h1>
       <ul className="nav-links">
         {authenticated ? (
           <>
             <li>
-              <button
+              <a
                 onClick={() => (window.location.href = "/hosting")}
-                className="btn-nav"
+                className="link-with-background transparent"
               >
                 My Properties
-              </button>
+              </a>
             </li>
             <li>
-              <button
+              <a
                 onClick={() => (window.location.href = "/trips")}
-                className="btn-nav"
+                className="link-with-background transparent"
               >
                 My Trips
-              </button>
-            </li>
-            <li>
-              <SignoutButton />
+              </a>
             </li>
           </>
         ) : (
           <>
             <li>
-              <button
+              <a
                 onClick={() => (window.location.href = "/become-a-host")}
-                className="btn-host"
+                className="link-with-background transparent"
               >
                 Become a host
-              </button>
+              </a>
             </li>
             <li>
-              <button
+              <a
                 onClick={() => (window.location.href = "/login")}
-                className="btn-login"
+                className="link-with-background transparent"
               >
                 Login
-              </button>
+              </a>
             </li>
             <li>
-              <button
+              <a
                 onClick={() => (window.location.href = "/signup")}
-                className="btn-signup"
+                className="link-with-background transparent"
               >
                 Sign up
-              </button>
+              </a>
             </li>
           </>
         )}
