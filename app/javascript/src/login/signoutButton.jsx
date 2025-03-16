@@ -20,7 +20,10 @@ class SignoutButton extends React.Component {
 
   render() {
     return (
-      <button onClick={this.logout} className="btn btn-danger">
+      <button
+        onClick={this.logout}
+        className="btn-logout link-with-background grey"
+      >
         Logout
       </button>
     );

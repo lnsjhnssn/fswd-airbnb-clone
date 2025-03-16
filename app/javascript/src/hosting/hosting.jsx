@@ -33,10 +33,6 @@ const Hosting = () => {
 
   return (
     <Layout>
-      <div className="container-hosting">
-        <h1>Welcome, {username}!</h1>
-      </div>
-
       <div>
         <MyProperties userId={userId} />
       </div>

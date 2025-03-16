@@ -123,7 +123,7 @@ class BookingWidget extends React.Component {
     }
 
     return (
-      <div>
+      <div className="booking-widget">
         <form onSubmit={this.submitBooking}>
           <h4>
             ${price_per_night} <small>night</small>
@@ -148,7 +148,10 @@ class BookingWidget extends React.Component {
               <p>${(price_per_night * days).toLocaleString()}</p>
             </div>
           )}
-          <button type="submit" className="btn-booking">
+          <button
+            type="submit"
+            className="link-with-background pink btn-reserve"
+          >
             Reserve
           </button>
         </form>

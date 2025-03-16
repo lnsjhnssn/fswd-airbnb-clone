@@ -4,7 +4,6 @@ import Layout from "@src/layout";
 import LoginWidget from "./loginWidget";
 import SignupWidget from "./signupWidget";
 import { checkAuthStatus } from "../../utils/api";
-
 import "../styles/main.scss";
 
 const Login = () => {
@@ -13,6 +12,11 @@ const Login = () => {
   const [showLogin, setShowLogin] = useState(true);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("show") === "signup") {
+      setShowLogin(false);
+    }
+
     const checkAuth = async () => {
       try {
         const data = await checkAuthStatus();

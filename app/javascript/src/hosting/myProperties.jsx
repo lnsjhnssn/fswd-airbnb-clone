@@ -72,12 +72,14 @@ const MyProperties = ({ userId }) => {
 
   return (
     <div className="container-my-properties">
-      <h2>My Properties</h2>
-      <a href="/add-property" className="btn-add-property">
-        Add a new property
-      </a>
+      <div className="header-container">
+        <h2>My Properties</h2>
+        <a href="/add-property" className="link-with-background pink">
+          Add a new property
+        </a>
+      </div>
       {properties.map((property) => (
-        <div key={property.id} className="property-card">
+        <div key={property.id} className="card-container">
           <h3>{property.title}</h3>
 
           {/* Property Images Grid */}
@@ -102,42 +104,50 @@ const MyProperties = ({ userId }) => {
             <p>
               <strong>Type:</strong> {property.property_type}
             </p>
+
+            <p>
+              <strong>Guests:</strong> {property.max_guests}{" "}
+            </p>
+            <p>
+              <strong>Bedrooms:</strong> {property.bedrooms}
+            </p>
+            <p>
+              <strong>Beds:</strong> {property.beds}
+            </p>
+            <p>
+              <strong> Baths:</strong> {property.baths}
+            </p>
             <p>
               <strong>Description:</strong> {property.description}
             </p>
-            <div className="specs">
-              <p>
-                <strong>Guests:</strong> {property.max_guests} •
-                <strong> Bedrooms:</strong> {property.bedrooms} •
-                <strong> Beds:</strong> {property.beds} •
-                <strong> Baths:</strong> {property.baths}
-              </p>
-            </div>
           </div>
 
           <div className="property-actions">
             <ul className="action-list">
               <li>
-                <a href={`/property/${property.id}`} className="action-link">
+                <a
+                  href={`/property/${property.id}`}
+                  className="link-with-background green"
+                >
                   View
                 </a>
               </li>
               <li>
                 <a
                   href={`/property/${property.id}/edit`}
-                  className="action-link"
+                  className="link-with-background green"
                 >
                   Edit
                 </a>
               </li>
               <li>
-                <button
+                <a
                   onClick={() => handleDeleteProperty(property.id)}
                   disabled={deleteLoading}
-                  className="action-link btn-delete"
+                  className="link-with-background delete"
                 >
                   {deleteLoading ? "Deleting..." : "Delete"}
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -165,12 +175,20 @@ const MyProperties = ({ userId }) => {
                         booking.is_paid ? "paid-booking" : "unpaid-booking"
                       }
                     >
-                      <td>{booking.user.username || "Guest"}</td>
-                      <td>
+                      <td className="td-guest">
+                        <span className="mobile-label">Guest: </span>
+                        {booking.user.username || "Guest"}
+                      </td>
+                      <td className="td-check-in">
+                        <span className="mobile-label">Check In: </span>
                         {new Date(booking.start_date).toLocaleDateString()}
                       </td>
-                      <td>{new Date(booking.end_date).toLocaleDateString()}</td>
-                      <td>
+                      <td className="td-check-out">
+                        <span className="mobile-label">Check Out: </span>
+                        {new Date(booking.end_date).toLocaleDateString()}
+                      </td>
+                      <td className="td-status">
+                        <span className="mobile-label">Status: </span>
                         {new Date(booking.start_date) > new Date() ? (
                           <span className="status upcoming">Upcoming</span>
                         ) : new Date(booking.end_date) < new Date() ? (
@@ -180,12 +198,13 @@ const MyProperties = ({ userId }) => {
                         )}
                       </td>
                       <td>
+                        <span className="mobile-label">Payment: </span>
                         <span
                           className={`payment-status ${
                             booking.is_paid ? "paid" : "pending"
                           }`}
                         >
-                          {booking.is_paid ? "✓ Paid" : "⏳ Pending"}
+                          {booking.is_paid ? "✓ Paid" : "Pending"}
                         </span>
                       </td>
                     </tr>

@@ -16,7 +16,7 @@ const PropertiesList = ({ properties, loading, loadMore, nextPage }) => {
           } = property;
 
           return (
-            <div key={id}>
+            <div key={id} className="properties-front-page">
               <a href={`/property/${id}`}>
                 <div className="img-property-list-container">
                   <img
@@ -25,17 +25,11 @@ const PropertiesList = ({ properties, loading, loadMore, nextPage }) => {
                     className="img-property-list"
                   />
                 </div>
-                <p>
-                  <small>
-                    <b>
-                      {city}, {country}
-                    </b>
-                  </small>
+                <p className="location">
+                  {city}, {country}
                 </p>
-                <h2>{title}</h2>
-                <p>
-                  <small>${price_per_night} USD/night</small>
-                </p>
+                <h2 className="title">{title}</h2>
+                <p className="price">${price_per_night} USD/night</p>
               </a>
             </div>
           );

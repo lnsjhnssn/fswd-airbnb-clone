@@ -1,7 +1,6 @@
 // signupWidget.jsx
 import React, { useState } from "react";
 import { signupUser, loginUser } from "../../utils/api";
-import "../styles/main.scss";
 
 const SignupWidget = ({ toggle }) => {
   const [formData, setFormData] = useState({
@@ -61,11 +60,13 @@ const SignupWidget = ({ toggle }) => {
 
   return (
     <div className="signup-container">
-      <div className="signup-widget">
+      <div className="signup-widget card-container">
         <h2>Sign Up</h2>
 
         <form onSubmit={handleSignup}>
+          <label htmlFor="username">Username</label>
           <input
+            className="form-control"
             name="username"
             type="text"
             placeholder="Username"
@@ -73,7 +74,9 @@ const SignupWidget = ({ toggle }) => {
             onChange={handleChange}
             required
           />
+          <label htmlFor="email">Email</label>
           <input
+            className="form-control"
             name="email"
             type="email"
             placeholder="Email"
@@ -81,7 +84,9 @@ const SignupWidget = ({ toggle }) => {
             onChange={handleChange}
             required
           />
+          <label htmlFor="password">Password</label>
           <input
+            className="form-control"
             name="password"
             type="password"
             placeholder="Password"
@@ -90,7 +95,12 @@ const SignupWidget = ({ toggle }) => {
             required
           />
           {error && <p className="error">{error}</p>}
-          <button type="submit">Sign up</button>
+          <button
+            type="submit"
+            className="link-with-background green btn-signup"
+          >
+            Sign up
+          </button>
         </form>
 
         <div className="login-prompt">
