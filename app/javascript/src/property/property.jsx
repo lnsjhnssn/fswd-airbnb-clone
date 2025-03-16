@@ -28,7 +28,7 @@ const Property = ({ property_id }) => {
   }, [property_id]);
 
   if (loading) {
-    return <p>loading...</p>;
+    return <p className="loading">loading...</p>;
   }
 
   const {
@@ -107,7 +107,7 @@ const Property = ({ property_id }) => {
                   onClick={() =>
                     (window.location.href = `/property/${id}/edit`)
                   }
-                  className="link-with-background grey"
+                  className="link-with-background grey btn-edit-property"
                 >
                   Edit Property
                 </a>

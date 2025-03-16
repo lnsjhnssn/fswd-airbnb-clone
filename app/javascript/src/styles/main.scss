@@ -41,14 +41,17 @@ body {
 
 h2 {
   font-size: 2.2rem;
+  line-height: 1.2;
 }
 
 h3 {
   font-size: 1.7rem;
+  line-height: 1.2;
 }
 
 h4 {
   font-size: 1.3rem;
+  line-height: 1.2;
 }
 
 a {
@@ -68,15 +71,11 @@ img {
   border-radius: 10px;
 }
 
-button {
-  padding: 0;
-  margin: 0;
-  background-color: transparent;
-  color: inherit;
-  font-size: inherit;
-  border: none;
-  cursor: auto;
+.loading {
+  text-align: center;
 }
+
+/* Forms */
 
 .form-control {
   padding: 0.5rem;
@@ -123,15 +122,21 @@ textarea {
 
 /* Links and Buttons */
 
+button {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  color: inherit;
+  font-size: inherit;
+  border: none;
+  cursor: auto;
+}
+
 .link-with-background {
   padding: 0.5rem 1rem;
   border-radius: 20px;
   justify-content: center;
   cursor: pointer;
-}
-
-.transparent:hover {
-  background-color: var(--border-color);
 }
 
 .grey {
@@ -371,6 +376,12 @@ textarea {
   overflow: hidden;
 }
 
+.property-header {
+  h3 {
+    margin-bottom: 1rem;
+  }
+}
+
 .images-container {
   display: flex;
   flex-direction: column;
@@ -406,8 +417,10 @@ textarea {
 .thumbnails-img-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: min-content;
   gap: 0.5rem;
   margin-top: 0.5rem;
+  align-content: start;
 
   @media (min-width: 744px) {
     margin-top: 0;
@@ -425,9 +438,14 @@ textarea {
 
   @media (min-width: 744px) {
     border-radius: 12px;
-    aspect-ratio: auto;
-    height: 100%;
+    aspect-ratio: 1;
+    height: auto;
   }
+}
+
+.btn-edit-property {
+  margin-bottom: 2rem;
+  display: inline-block;
 }
 
 /* Mobile spacing */
@@ -659,7 +677,7 @@ td {
 footer {
   padding: 1rem 0;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 6rem;
 
   a {
     text-decoration: underline;

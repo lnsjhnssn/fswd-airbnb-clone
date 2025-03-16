@@ -35,7 +35,7 @@ const PropertiesList = ({ properties, loading, loadMore, nextPage }) => {
           );
         })}
       </div>
-      {loading && <p>loading...</p>}
+      {loading && <p className="loading">loading...</p>}
       {!loading && nextPage && (
         <div>
           <button onClick={loadMore}>See more</button>

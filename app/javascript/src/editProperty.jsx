@@ -64,7 +64,7 @@ const EditProperty = () => {
   if (loading) {
     return (
       <Layout>
-        <div>Loading...</div>
+        <div className="loading">Loading...</div>
       </Layout>
     );
   }
