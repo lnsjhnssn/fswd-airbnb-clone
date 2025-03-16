@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { checkAuth } from "../../utils/api";
 import SignoutButton from "../login/signoutButton";
-import logo from "../assets/logo.png";
+import logo from "../assets/farmbnb.png";
 const Navbar = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -22,8 +22,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <h1 className="bnb-logo" onClick={() => (window.location.href = "/")}>
-        {/* <img src={logo} alt="bnb-logo" /> */}
-        bnb
+        <img src={logo} alt="bnb-logo" />
       </h1>
       <ul className="nav-links">
         {authenticated ? (

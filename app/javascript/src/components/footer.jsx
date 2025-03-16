@@ -9,13 +9,13 @@ const Footer = () => {
         <p>Made by Linus Johansson 2025</p>
         <ul>
           <li>
-            <a href="">Email</a>
+            <a href="mailto:linus.johansson.riihimaki@gmail.com">Email</a>
           </li>
           <li>
-            <a href="">GitHub</a>
+            <a href="https://github.com/lnsjhnssn">GitHub</a>
           </li>
           <li>
-            <a href="">Website</a>
+            <a href="https://trubbelstudio.netlify.app/">Website</a>
           </li>
         </ul>
         <p>
