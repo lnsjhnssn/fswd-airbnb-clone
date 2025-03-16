@@ -3,13 +3,13 @@
   --text-secondary: #6a6a6a;
   --error-color: #dc3545;
   --border-color: #dddddd4a;
-  --bg-color: #f3fbff;
-  --section-color: #eaf1ff;
+  --bg-color: #fefefe;
+  --section-color: #e8f9fd;
   --white: #fff;
   --pink: #dd297e;
   --pink-light: #f4aacc;
-  --airbnb-color: #ff5a5f;
-  --airbnb-color-hover: #ff5a5fee;
+  --airbnb-color: #ff1e00;
+  --airbnb-color-hover: #ff1e00ee;
   --yellow: #ffe800;
   --green: #00a66f;
   --green-hover: #00a66fee;
@@ -191,6 +191,18 @@ textarea {
   margin: 0 2rem 3.6rem;
 }
 
+@media (max-width: 550px) {
+  .header-container {
+    flex-direction: column;
+    align-items: start;
+    margin: 0 0rem 2rem;
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
 /****** Navigation ******/
 .navbar {
   display: flex;
@@ -204,14 +216,24 @@ textarea {
   border-radius: 12px;
 }
 
-.bnb-logo {
-  width: 150px;
-  cursor: pointer;
-}
-
 .nav-links {
   display: flex;
   gap: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 445px) {
+  .nav-links {
+    flex-direction: column;
+  }
+
+  .navbar {
+    align-items: start;
+  }
+}
+
+.bnb-logo {
+  width: 150px;
   cursor: pointer;
 }
 
@@ -219,20 +241,45 @@ textarea {
 .login-container,
 .signup-container {
   max-width: 400px;
+  width: 90%;
   margin: 1rem auto;
 }
 
 .login-widget,
 .signup-widget {
-  padding: 1rem;
+  padding: 1.5rem;
   border: 1px solid var(--border-color);
+  border-radius: 12px;
+
+  h2 {
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    font-size: clamp(0.9rem, 4vw, 1rem);
+    margin-bottom: 0.3rem;
+    display: block;
+  }
 
   input[type="text"],
   input[type="email"],
   input[type="password"] {
     background-color: white !important;
+    padding: clamp(0.6rem, 3vw, 0.8rem);
+    font-size: clamp(0.9rem, 4vw, 1rem);
+    width: 100%;
   }
 
+  button[type="submit"] {
+    width: 100%;
+    padding: clamp(0.7rem, 3vw, 1rem);
+    margin-top: 1rem;
+    font-size: clamp(0.9rem, 4vw, 1rem);
+    min-height: 44px;
+  }
+
+  /* Target Chrome's autofill specifically */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -240,10 +287,6 @@ textarea {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
     -webkit-text-fill-color: var(--text-color) !important;
     transition: background-color 5000s ease-in-out 0s;
-  }
-
-  h2 {
-    margin-bottom: 1rem;
   }
 }
 
@@ -255,13 +298,38 @@ textarea {
   cursor: pointer;
   text-decoration: underline;
   padding: 0;
+  font-size: clamp(0.9rem, 4vw, 1rem);
 }
 
-.link-button:hover {
-  text-decoration: none;
+/* Mobile */
+@media (max-width: 480px) {
+  .login-container,
+  .signup-container {
+    padding: 0 1rem;
+  }
+
+  .form-control {
+    margin-bottom: 1.5rem;
+  }
+
+  .login-widget .signup-prompt,
+  .signup-widget .login-prompt {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
 }
 
 /****** Frontpage ******/
+
+.properties-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+
+  @media screen and (min-width: 1128px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 
 .properties-front-page {
   .location {
@@ -278,18 +346,6 @@ textarea {
   }
 }
 
-/****** Property ******/
-
-.properties-container {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1rem;
-
-  @media screen and (min-width: 1128px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
 .img-property-list-container {
   width: 100%;
   height: 250px;
@@ -303,35 +359,83 @@ textarea {
   object-fit: cover;
 }
 
-/****** Property detail ******/
+/****** Property details ******/
+
+.property-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+}
+
 .images-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  overflow: hidden;
 
   @media (min-width: 744px) {
-    grid-template-columns: 1fr 1fr;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
     gap: 0.5rem;
+    max-height: 450px;
   }
 }
 
 .main-img-container {
   width: 100%;
-  height: auto;
-  margin-bottom: 0.5rem;
+  height: 300px;
+  overflow: hidden;
+
+  @media (min-width: 744px) {
+    height: 450px;
+    margin-bottom: 0;
+  }
+}
+
+.large-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .thumbnails-img-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+
+  @media (min-width: 744px) {
+    margin-top: 0;
+    grid-template-columns: 1fr 1fr;
+    overflow-y: auto;
+    max-height: 450px;
+  }
 }
 
 .thumbnail-image {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1;
   object-fit: cover;
+  border-radius: 12px;
+
+  @media (min-width: 744px) {
+    border-radius: 12px;
+    aspect-ratio: auto;
+    height: 100%;
+  }
+}
+
+/* Mobile spacing */
+@media (max-width: 743px) {
+  .property-content {
+    padding: 0 1rem;
+  }
+
+  .property-header h3 {
+    margin-top: 1rem;
+  }
 }
 
 .property-specs li {
