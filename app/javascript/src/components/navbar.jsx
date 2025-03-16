@@ -30,7 +30,7 @@ const Navbar = () => {
             <li>
               <a
                 onClick={() => (window.location.href = "/hosting")}
-                className="link-with-background transparent"
+                className="link-with-background grey"
               >
                 My Properties
               </a>
@@ -38,7 +38,7 @@ const Navbar = () => {
             <li>
               <a
                 onClick={() => (window.location.href = "/trips")}
-                className="link-with-background transparent"
+                className="link-with-background grey"
               >
                 My Trips
               </a>
@@ -49,7 +49,7 @@ const Navbar = () => {
             <li>
               <a
                 onClick={() => (window.location.href = "/login")}
-                className="link-with-background transparent"
+                className="link-with-background grey"
               >
                 Login
               </a>
@@ -57,7 +57,7 @@ const Navbar = () => {
             <li>
               <a
                 onClick={() => (window.location.href = "/login?show=signup")}
-                className="link-with-background transparent"
+                className="link-with-background grey"
               >
                 Sign up
               </a>
