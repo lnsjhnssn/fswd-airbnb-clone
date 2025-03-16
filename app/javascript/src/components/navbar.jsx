@@ -49,7 +49,7 @@ const Navbar = () => {
           <>
             <li>
               <a
-                onClick={() => (window.location.href = "/become-a-host")}
+                onClick={() => (window.location.href = "/login")}
                 className="link-with-background transparent"
               >
                 Become a host
@@ -65,7 +65,7 @@ const Navbar = () => {
             </li>
             <li>
               <a
-                onClick={() => (window.location.href = "/signup")}
+                onClick={() => (window.location.href = "/login?show=signup")}
                 className="link-with-background transparent"
               >
                 Sign up
