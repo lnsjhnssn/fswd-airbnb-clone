@@ -130,11 +130,11 @@ const EditProperty = () => {
                 defaultValue={property?.property_type}
               >
                 <option value="">Select</option>
-                <option value="apartment">Apartment</option>
-                <option value="house">House</option>
-                <option value="condo">Condo</option>
-                <option value="cabin">Cabin</option>
-                <option value="treehouse">Treehouse</option>
+                <option value="Cottage">Cabin</option>
+                <option value="Farm">Farm</option>
+                <option value="House">House</option>
+                <option value="Room">Room</option>
+                <option value="Treehouse">Treehouse</option>
               </select>
             </div>
             <div className="form-group">

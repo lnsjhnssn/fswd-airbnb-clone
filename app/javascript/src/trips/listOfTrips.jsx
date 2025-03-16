@@ -15,21 +15,20 @@ const ListOfTrips = () => {
         const data = await fetchMyBookings();
         const bookings = data.bookings;
 
-        // Fetch full property details for each booking
         const updatedBookings = await Promise.all(
           bookings.map(async (booking) => {
             try {
               const propertyData = await fetchProperty(booking.property.id);
               return {
                 ...booking,
-                property: propertyData.property, // Replace with full property data
+                property: propertyData.property,
               };
             } catch (error) {
               console.error(
                 `Error fetching property ${booking.property.id}:`,
                 error
               );
-              return booking; // Keep original booking if fetch fails
+              return booking;
             }
           })
         );
@@ -78,68 +77,76 @@ const ListOfTrips = () => {
   }
 
   return (
-    <div className="trips-container">
-      {bookings.map((booking) => (
-        <div key={booking.id} className="card-container">
-          <div className="booking-grid">
-            <div className="booking-image">
-              {propertyImages[booking.property.id]?.length > 0 ? (
-                <img
-                  src={propertyImages[booking.property.id][0].url}
-                  alt={booking.property.title}
-                />
-              ) : (
-                <div className="no-image-placeholder">No image available</div>
-              )}
-            </div>
-
-            <div className="booking-details">
-              <h3>{booking.property.title}</h3>
-              <p className="booking-location">
-                {booking.property.city}, {booking.property.country}
-              </p>
-
-              <div className="booking-dates">
-                <p>
-                  <strong>Check in:</strong>{" "}
-                  {new Date(booking.start_date).toLocaleDateString()}
-                </p>
-                <p>
-                  <strong>Check out:</strong>{" "}
-                  {new Date(booking.end_date).toLocaleDateString()}
-                </p>
-              </div>
-
-              <div className="booking-status">
-                <p>
-                  <strong>Payment: </strong>
-                  <span
-                    className={`payment-status ${
-                      booking.is_paid ? "paid" : "pending"
-                    }`}
-                  >
-                    {booking.is_paid ? "Paid" : "Payment pending"}
-                  </span>
-                </p>
-              </div>
-
-              <div className="booking-actions">
-                <a
-                  href={`/property/${booking.property.id}`}
-                  className="link-with-background green"
-                >
-                  View full description
-                </a>
-                {!booking.is_paid && (
-                  <a href="#" className="link-with-background pink">
-                    Complete payment
-                  </a>
+    <div>
+      <div className="header-container">
+        <h2>My Trips</h2>
+        <a href="/" className="link-with-background pink">
+          Book a new trip
+        </a>
+      </div>
+      <div className="trips-container">
+        {bookings.map((booking) => (
+          <div key={booking.id} className="card-container">
+            <div className="booking-grid">
+              <div className="booking-image">
+                {propertyImages[booking.property.id]?.length > 0 ? (
+                  <img
+                    src={propertyImages[booking.property.id][0].url}
+                    alt={booking.property.title}
+                  />
+                ) : (
+                  <div className="no-image-placeholder">No image available</div>
                 )}
+              </div>
+
+              <div className="booking-details">
+                <h3>{booking.property.title}</h3>
+                <p className="booking-location">
+                  {booking.property.city}, {booking.property.country}
+                </p>
+
+                <div className="booking-dates">
+                  <p>
+                    <strong>Check in:</strong>{" "}
+                    {new Date(booking.start_date).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <strong>Check out:</strong>{" "}
+                    {new Date(booking.end_date).toLocaleDateString()}
+                  </p>
+                </div>
+
+                <div className="booking-status">
+                  <p>
+                    <strong>Payment: </strong>
+                    <span
+                      className={`payment-status ${
+                        booking.is_paid ? "paid" : "pending"
+                      }`}
+                    >
+                      {booking.is_paid ? "Paid" : "Payment pending"}
+                    </span>
+                  </p>
+                </div>
+
+                <div className="booking-actions">
+                  <a
+                    href={`/property/${booking.property.id}`}
+                    className="link-with-background green"
+                  >
+                    View full description
+                  </a>
+                  {!booking.is_paid && (
+                    <a href="#" className="link-with-background pink">
+                      Complete payment
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
