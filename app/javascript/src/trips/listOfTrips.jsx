@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchMyBookings, fetchProperty } from "../../utils/api";
+import Loading from "@src/components/Loading";
 
 import "./../styles/main.scss";
 
@@ -60,7 +61,7 @@ const ListOfTrips = () => {
     loadBookings();
   }, []);
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <Loading />;
   if (error) return <div>Error: {error}</div>;
 
   if (bookings.length === 0) {

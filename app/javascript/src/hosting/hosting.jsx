@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "@src/layout";
 import MyProperties from "./myProperties";
 import { checkAuth } from "../../utils/api";
+import Loading from "@src/components/Loading";
 
 import "./hosting.scss";
 
@@ -24,11 +25,7 @@ const Hosting = () => {
   }, []);
 
   if (loading) {
-    return (
-      <Layout>
-        <p className="loading">Loading...</p>
-      </Layout>
-    );
+    return <Loading />;
   }
 
   return (

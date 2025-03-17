@@ -6,6 +6,7 @@ import {
   fetchPropertiesWithPagination,
 } from "../utils/api";
 import PropertiesList from "./propertiesList";
+import Loading from "@src/components/Loading";
 
 import "@src/styles/main.scss";
 
@@ -62,7 +63,7 @@ const Home = () => {
       <div>
         <div>
           <PropertiesList properties={properties} />
-          {loading && <p>loading...</p>}
+          {loading && <Loading />}
           {!loading && nextPage && (
             <div>
               <button onClick={loadMore}>See more</button>

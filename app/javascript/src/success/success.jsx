@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../layout";
 import { safeCredentials, handleErrors } from "../../utils/fetchHelper";
+import Loading from "@src/components/Loading";
 
 const Success = () => {
   const [booking, setBooking] = useState(null);
@@ -27,13 +28,7 @@ const Success = () => {
   }, [booking_id]);
 
   if (loading) {
-    return (
-      <Layout>
-        <div className="container mt-5">
-          <p>Loading booking details...</p>
-        </div>
-      </Layout>
-    );
+    return <Loading />;
   }
 
   return (
@@ -42,8 +37,7 @@ const Success = () => {
         <div>
           <div className="header-container">
             <div>
-              <h2>Enjoy your journey!</h2>
-              <h3>Your booking is being processed.</h3>
+              <h2>Booking Confirmed!</h2>
             </div>
           </div>
           <div className="card-container">
@@ -72,7 +66,8 @@ const Success = () => {
             )}
             <div>
               <p className="confirmation-email">
-                <strong>You will receive a confirmation email shortly.</strong>
+                Thank you for your booking! Your trip is now confirmed, and a
+                confirmation email will be sent to you shortly.
               </p>
             </div>
           </div>

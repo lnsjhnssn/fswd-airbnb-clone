@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "@src/layout";
 import BookingWidget from "./bookingWidget";
 import { fetchProperty, fetchProperties, checkAuth } from "../../utils/api";
+import Loading from "@src/components/Loading";
 
 import "./property.scss";
 
@@ -28,7 +29,7 @@ const Property = ({ property_id }) => {
   }, [property_id]);
 
   if (loading) {
-    return <p className="loading">loading...</p>;
+    return <Loading />;
   }
 
   const {

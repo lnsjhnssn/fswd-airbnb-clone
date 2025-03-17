@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Layout from "@src/layout";
 import { fetchProperty, updateProperty } from "../utils/api";
+import Loading from "@src/components/Loading";
 
 const EditProperty = () => {
   const [property, setProperty] = useState(null);
@@ -62,11 +63,7 @@ const EditProperty = () => {
   };
 
   if (loading) {
-    return (
-      <Layout>
-        <div className="loading">Loading...</div>
-      </Layout>
-    );
+    return <Loading />;
   }
 
   return (

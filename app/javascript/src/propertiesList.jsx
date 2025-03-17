@@ -1,4 +1,5 @@
 import React from "react";
+import Loading from "@src/components/Loading";
 
 const PropertiesList = ({ properties, loading, loadMore, nextPage }) => {
   return (
@@ -35,7 +36,7 @@ const PropertiesList = ({ properties, loading, loadMore, nextPage }) => {
           );
         })}
       </div>
-      {loading && <p className="loading">loading...</p>}
+      {loading && <Loading />}
       {!loading && nextPage && (
         <div>
           <button onClick={loadMore}>See more</button>
