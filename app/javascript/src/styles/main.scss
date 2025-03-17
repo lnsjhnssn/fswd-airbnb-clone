@@ -72,11 +72,23 @@ img {
   border-radius: 10px;
 }
 
-.loading {
-  text-align: center;
+/***** Loading spinner *****/
+
+.loading-spinner {
+  width: 60px;
+  aspect-ratio: 4;
+  background: radial-gradient(circle closest-side, #000 90%, #0000) 0 /
+    calc(100% / 3) 100% space;
+  clip-path: inset(0 100% 0 0);
+  animation: d1 1s steps(4) infinite;
+}
+@keyframes d1 {
+  to {
+    clip-path: inset(0 -34% 0 0);
+  }
 }
 
-/* Forms */
+/****** Forms ******/
 
 .form-control {
   padding: 0.5rem;
@@ -288,7 +300,7 @@ button {
     min-height: 44px;
   }
 
-  /* Target Chrome's autofill specifically */
+  /* For Chrome autofill */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -310,7 +322,7 @@ button {
   font-size: clamp(0.9rem, 4vw, 1rem);
 }
 
-/* Mobile */
+/* Mobile Forms */
 @media (max-width: 480px) {
   .login-container,
   .signup-container {
@@ -333,7 +345,16 @@ button {
 .properties-container {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 1rem;
+  gap: 1.3rem;
+  background-color: var(--white);
+
+  @media screen and (min-width: 575px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: 950px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   @media screen and (min-width: 1128px) {
     grid-template-columns: repeat(4, 1fr);
@@ -392,7 +413,7 @@ button {
 
   @media (min-width: 744px) {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 7fr 5fr;
     gap: 0.5rem;
     max-height: 450px;
   }
@@ -400,11 +421,10 @@ button {
 
 .main-img-container {
   width: 100%;
-  height: 300px;
+  height: 450px;
   overflow: hidden;
 
   @media (min-width: 744px) {
-    height: 450px;
     margin-bottom: 0;
   }
 }
@@ -435,10 +455,8 @@ button {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 12px;
 
   @media (min-width: 744px) {
-    border-radius: 12px;
     aspect-ratio: 1;
     height: auto;
   }
@@ -700,20 +718,4 @@ footer {
 
 .btn-logout {
   margin-top: 1rem;
-}
-
-/***** Loading spinner *****/
-
-.loading-spinner {
-  width: 60px;
-  aspect-ratio: 4;
-  background: radial-gradient(circle closest-side, #000 90%, #0000) 0 /
-    calc(100% / 3) 100% space;
-  clip-path: inset(0 100% 0 0);
-  animation: d1 1s steps(4) infinite;
-}
-@keyframes d1 {
-  to {
-    clip-path: inset(0 -34% 0 0);
-  }
 }
